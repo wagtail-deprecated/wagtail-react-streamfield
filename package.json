@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "devDependencies": {
+    "react-streamfield": "0.1.0"
+  },
+  "babel": {
+    "presets": [
+      "env",
+      "react"
+    ],
+    "plugins": [
+      "transform-class-properties",
+      "transform-object-rest-spread",
+      "transform-decorators-legacy"
+    ]
+  },
+  "scripts": {
+    "build": "webpack --config webpack.config.js --mode production",
+    "start": "webpack --config webpack.config.js --mode development --watch"
+  }
+}

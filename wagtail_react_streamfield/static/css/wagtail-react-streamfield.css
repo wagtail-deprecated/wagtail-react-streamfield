@@ -1,0 +1,133 @@
+body {
+  background: #F6F6F6; }
+
+.children-container {
+  position: relative;
+  padding: 21px; }
+  .children-container > button.add {
+    transition: opacity 0.3s ease-in-out;
+    opacity: 1; }
+  .children-container.is-dragging > button.add {
+    opacity: 0; }
+  .children-container .block {
+    position: relative;
+    padding: 4px; }
+    .children-container .block > .block-container {
+      border: 1px solid lightGrey;
+      border-radius: 3px;
+      overflow: hidden;
+      background: white; }
+      .children-container .block > .block-container > header {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        background: #FAFAFA;
+        cursor: grab;
+        user-select: none; }
+        .children-container .block > .block-container > header h3 {
+          flex: 1 1 auto;
+          margin: 0;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          color: #888888; }
+          .children-container .block > .block-container > header h3 .type-icon {
+            margin-right: 7.5px;
+            color: #888888; }
+          .children-container .block > .block-container > header h3 .block-type {
+            margin-left: 0; }
+        .children-container .block > .block-container > header .block-type {
+          margin: 0 7.5px;
+          font-weight: normal;
+          font-style: italic;
+          font-size: 85%;
+          line-height: 85%;
+          color: #888888; }
+        .children-container .block > .block-container > header > aside {
+          flex: 0 0 auto; }
+          .children-container .block > .block-container > header > aside > .actions > button {
+            appearance: none;
+            border: none;
+            background: none;
+            cursor: pointer;
+            color: #888888;
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out; }
+            .children-container .block > .block-container > header > aside > .actions > button.disabled {
+              opacity: 0.2;
+              pointer-events: none; }
+      .children-container .block > .block-container > .content-container > .content {
+        padding: 12px;
+        border-top: 1px solid lightGrey; }
+    .children-container .block:hover > .block-container, .children-container .block:focus > .block-container, .children-container .block:focus-within > .block-container {
+      border-color: #BBBBBB;
+      box-shadow: 3px 2px 3px -1px rgba(0, 0, 0, 0.1); }
+      .children-container .block:hover > .block-container > header h3, .children-container .block:focus > .block-container > header h3, .children-container .block:focus-within > .block-container > header h3 {
+        color: #4d4d4d; }
+        .children-container .block:hover > .block-container > header h3 .type-icon, .children-container .block:focus > .block-container > header h3 .type-icon, .children-container .block:focus-within > .block-container > header h3 .type-icon {
+          color: #4d4d4d; }
+      .children-container .block:hover > .block-container > header > aside > .actions > button, .children-container .block:focus > .block-container > header > aside > .actions > button, .children-container .block:focus-within > .block-container > header > aside > .actions > button {
+        color: #4d4d4d; }
+  .children-container button.add {
+    position: absolute;
+    appearance: none;
+    border: none;
+    color: #43b1b0;
+    font-weight: bold;
+    background: none;
+    transform: translate(-100%, -50%);
+    font-size: 30px;
+    line-height: 30px;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
+    backface-visibility: hidden;
+    overflow: hidden;
+    user-select: none; }
+    .children-container button.add i {
+      display: block;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      font-style: normal; }
+    .children-container button.add.close i {
+      transform: rotate(45deg); }
+  .children-container label {
+    display: block;
+    font-weight: bold; }
+    .children-container label + label {
+      margin-top: 15px; }
+  .children-container .field + .field {
+    padding-top: 15px; }
+  .children-container .field label .label-text {
+    margin-bottom: 7.5px; }
+  .children-container .field.required > label > .label-text::after {
+    content: '*';
+    color: #cd3238;
+    font-weight: 700;
+    display: inline-block;
+    margin-left: .5em;
+    line-height: 1em;
+    font-size: 13px; }
+  .children-container .add-panel {
+    position: relative;
+    margin: 4px;
+    padding: 7.5px;
+    background: #EEEEEE;
+    border-radius: 3px;
+    user-select: none; }
+    .children-container .add-panel button.type {
+      margin: 7.5px;
+      appearance: none;
+      background: #43b1b0;
+      color: white;
+      padding: 0;
+      border: none;
+      border-radius: 3px;
+      outline: none;
+      cursor: pointer;
+      overflow: hidden; }
+      .children-container .add-panel button.type .icon, .children-container .add-panel button.type .label {
+        display: inline-block;
+        padding: 4px 8px; }
+      .children-container .add-panel button.type .icon {
+        background-color: rgba(0, 0, 0, 0.2); }
+
