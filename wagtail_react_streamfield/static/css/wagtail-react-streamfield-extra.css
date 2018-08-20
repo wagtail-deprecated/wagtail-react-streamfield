@@ -1,0 +1,46 @@
+body {
+  overflow-x: unset;  /* Otherwise drag & drop doesn’t work. */
+}
+
+header.tab-merged {
+  overflow-x: hidden;
+}
+
+.object.stream-field {
+  background-color: #F6F6F6;
+}
+
+.children-container .block > .block-container > header {
+  margin-bottom: unset;
+  color: unset;
+}
+
+.children-container .block > .block-container > header > aside > .actions > button {
+  padding: 1px 6px;
+}
+
+.children-container .add-panel button.type .icon, .children-container .add-panel button.type .label {
+  color: unset;
+  font-size: unset;
+  font-weight: normal;
+}
+
+.children-container .add-panel button.type .icon > .icon {
+  background: unset;
+  padding: unset;
+}
+
+.children-container .add-panel button.type .icon > .icon::before {
+  margin: unset;
+}
+
+.children-container .field label {
+  float: unset;
+  width: unset;
+  max-width: unset;
+  padding: 0;
+}
+
+.children-container .field label::after {
+  content: '';
+}
