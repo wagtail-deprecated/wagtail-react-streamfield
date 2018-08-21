@@ -76,6 +76,7 @@ class NewBlockWidget(BlockWidget):
             return value
         data = {
             'type': type_name,
+            'hasError': bool(errors),
         }
         if isinstance(block, FieldBlock):
             from wagtail.admin.rich_text import DraftailRichTextArea
@@ -111,7 +112,7 @@ class NewBlockWidget(BlockWidget):
         }
         if block.meta.icon != Block._meta_class.icon:
             block_definition['icon'] = ('<i class=\"icon icon-%s\"></i>'
-                                        % block.meta.icon),
+                                        % block.meta.icon)
         if block.meta.classname is not None:
             block_definition['className'] = block.meta.classname
         if isinstance(block, FieldBlock):
@@ -128,7 +129,7 @@ class NewBlockWidget(BlockWidget):
             ]
             for child_block_key, child_block in block.child_blocks.items():
                 title_template = cls.get_title_template(child_block_key,
-                                                         child_block)
+                                                        child_block)
                 if title_template is not None:
                     block_definition['titleTemplate'] = title_template
                     break
