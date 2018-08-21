@@ -1,2 +1,5 @@
 *.pyc
 /.idea/
+/dist/
+/build/
+/wagtail_react_streamfield.egg-info/
