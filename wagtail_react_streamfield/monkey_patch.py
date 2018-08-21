@@ -1,10 +1,24 @@
 from django.utils.six import wraps
 from wagtail.core.blocks import BlockField
 
-from .widget import NewBlockWidget
+from .widgets import NewBlockWidget
 
 
-def _patch_block_field():
+def _patch_streamfield_panel():
+    from wagtail.admin.edit_handlers import StreamFieldPanel
+    from .edit_handlers import NewStreamFieldPanel
+
+    def patch_html_declarations(original):
+        @wraps(original)
+        def inner(self):
+            return NewStreamFieldPanel.html_declarations(self)
+        return inner
+
+    StreamFieldPanel.html_declarations = \
+        patch_html_declarations(StreamFieldPanel.html_declarations)
+
+
+def _patch_block_widget():
     def patch_init(original):
         @wraps(original)
         def inner(self, block=None, **kwargs):
@@ -17,4 +31,5 @@ def _patch_block_field():
 
 
 def patch():
-    _patch_block_field()
+    _patch_streamfield_panel()
+    _patch_block_widget()
