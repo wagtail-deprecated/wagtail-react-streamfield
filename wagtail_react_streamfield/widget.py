@@ -159,7 +159,7 @@ class NewBlockWidget(BlockWidget):
 
     @property
     def media(self):
-        return Media(
+        return self.block_def.all_media() + Media(
             js=['js/wagtail-react-streamfield.js'],
             css={'all': [
                 'css/wagtail-react-streamfield.css',
