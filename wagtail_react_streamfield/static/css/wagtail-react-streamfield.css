@@ -23,14 +23,16 @@
       border: 1px solid #d3d3d3;
       border-radius: 3px;
       overflow: hidden;
-      background: white; }
+      background: white;
+      transition: 0.3s border-color ease-in-out; }
       .children-container .block > .block-container > header {
         display: flex;
         align-items: center;
         padding: 8px;
         background: #f5f5f5;
         cursor: grab;
-        user-select: none; }
+        user-select: none;
+        transition: 0.3s background-color ease-in-out; }
         .children-container .block > .block-container > header h3 {
           flex: 1 1 auto;
           margin: 0;
@@ -106,9 +108,9 @@
       margin-top: 15px; }
   .children-container .field + .field {
     padding-top: 15px; }
-  .children-container .field label .label-text {
+  .children-container .field label {
     margin-bottom: 7.5px; }
-  .children-container .field.required > label > .label-text::after {
+  .children-container .field.required > label::after {
     content: '*';
     color: #cd3238;
     font-weight: 700;

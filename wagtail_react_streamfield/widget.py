@@ -80,10 +80,10 @@ class NewBlockWidget(BlockWidget):
         }
         if isinstance(block, FieldBlock):
             from wagtail.admin.rich_text import DraftailRichTextArea
-            name = 'field-%s' % uuid4()
             data.update(
-                name=name,
-                html=block.render_form(value, prefix=name, errors=errors),
+                id=str(uuid4()),
+                html=block.render_form(value, prefix='field-__ID__',
+                                       errors=errors),
             )
             if value == '':
                 value = None
@@ -117,7 +117,7 @@ class NewBlockWidget(BlockWidget):
             block_definition['className'] = block.meta.classname
         if isinstance(block, FieldBlock):
             block_definition['html'] = block.render_form(
-                block.to_python(None), prefix=block.name)
+                block.to_python(None), prefix='field-__ID__')
             title_template = cls.get_title_template(block.name, block)
             if title_template is not None:
                 block_definition['titleTemplate'] = title_template
