@@ -1,7 +1,7 @@
 .children-container {
   position: relative;
   padding: 21px; }
-  .children-container.is-dragging > button.add {
+  .children-container.is-dragging > button.add.visible {
     opacity: 0;
     pointer-events: none; }
   .children-container .block {

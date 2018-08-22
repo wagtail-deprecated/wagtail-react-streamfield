@@ -1,7 +1,7 @@
 {
   "private": true,
   "devDependencies": {
-    "react-streamfield": "0.2.0"
+    "react-streamfield": "0.3.0"
   },
   "babel": {
     "presets": [
