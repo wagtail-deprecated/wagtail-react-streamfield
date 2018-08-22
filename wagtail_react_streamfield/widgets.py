@@ -138,14 +138,15 @@ class NewBlockWidget(BlockWidget):
                 cls.get_definition(block.name, block.child_block),
             ]
         elif isinstance(block, StreamBlock):
-            block_definition['children'] = [
-                cls.get_definition(k, b)
-                for k, b in block.child_blocks.items()
-            ]
+            # TODO: Modify Wagtail to add min_num & max_num to ListBlock.
+            block_definition['minNum'] = block.meta.min_num
+            block_definition['maxNum'] = block.meta.max_num
         return block_definition
 
     def render_with_errors(self, name, value, attrs=None, errors=None):
         streamfield_config = {
+            'minNum': self.block_def.meta.min_num,
+            'maxNum': self.block_def.meta.max_num,
             'blockDefinitions': [
                 self.get_definition(key, block)
                 for key, block in self.block_def.child_blocks.items()

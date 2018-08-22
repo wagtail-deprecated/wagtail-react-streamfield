@@ -1,11 +1,9 @@
 .children-container {
   position: relative;
   padding: 21px; }
-  .children-container > button.add {
-    transition: opacity 0.3s ease-in-out;
-    opacity: 1; }
   .children-container.is-dragging > button.add {
-    opacity: 0; }
+    opacity: 0;
+    pointer-events: none; }
   .children-container .block {
     position: relative;
     padding: 4px; }
@@ -30,9 +28,13 @@
         align-items: center;
         padding: 8px;
         background: #f5f5f5;
-        cursor: grab;
         user-select: none;
-        transition: 0.3s background-color ease-in-out; }
+        transition: 0.3s background-color ease-in-out;
+        cursor: default; }
+        .children-container .block > .block-container > header.collapsible {
+          cursor: pointer; }
+        .children-container .block > .block-container > header.sortable {
+          cursor: grab; }
         .children-container .block > .block-container > header h3 {
           flex: 1 1 auto;
           margin: 0;
@@ -94,7 +96,13 @@
     outline: none;
     backface-visibility: hidden;
     overflow: hidden;
-    user-select: none; }
+    user-select: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none; }
+    .children-container button.add.visible {
+      opacity: 1;
+      pointer-events: unset; }
     .children-container button.add i {
       display: block;
       transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
