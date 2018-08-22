@@ -138,6 +138,10 @@ class NewBlockWidget(BlockWidget):
                 cls.get_definition(block.name, block.child_block),
             ]
         elif isinstance(block, StreamBlock):
+            block_definition['children'] = [
+                cls.get_definition(k, b)
+                for k, b in block.child_blocks.items()
+            ]
             # TODO: Modify Wagtail to add min_num & max_num to ListBlock.
             block_definition['minNum'] = block.meta.min_num
             block_definition['maxNum'] = block.meta.max_num
