@@ -80,9 +80,6 @@ class NewBlockWidget(BlockWidget):
             'type': type_name,
             'hasError': bool(errors),
         })
-        if isinstance(block, ChooserBlock):
-            data['html'] = block.render_form(value, prefix='field-__ID__',
-                                             errors=errors)
         if isinstance(block, FieldBlock):
             from wagtail.admin.rich_text import DraftailRichTextArea
             if value == '':
