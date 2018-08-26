@@ -1,6 +1,11 @@
 What’s new in wagtail-react-streamfield?
 ========================================
 
+0.8.4
+-----
+
+- Fixes loading of Draftail RichTextBlock in some *scenarii*
+
 0.8.3
 -----
 
