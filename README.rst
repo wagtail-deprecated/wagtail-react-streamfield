@@ -30,6 +30,7 @@ It’s really easy to setup, like most NoriPyt packages:
 
 - ``pip install wagtail-react-streamfield``
 - Add ``'wagtail_react_streamfield',`` to your ``INSTALLED_APPS``
+  **before** ``'wagtail.admin'``
 
 That’s it!
 
