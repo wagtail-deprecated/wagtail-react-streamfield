@@ -1,6 +1,15 @@
 What’s new in wagtail-react-streamfield?
 ========================================
 
+0.8.3
+-----
+
+- Fixes loading and duplication of TableBlock, Hallo.js RichTextBlocks
+- Fixes Draftail RichTextBlock duplication
+- Avoids showing a confirm when exiting an unmodified page
+- Fixes handling of custom empty block values
+- Fixes handling of extra undefined data
+
 0.8.2
 -----
 
