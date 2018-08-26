@@ -62,7 +62,7 @@ class NewBlockWidget(BlockWidget):
             value = [
                 self.prepare_value(
                     block, block.child_block, child_block_data,
-                    type_name=block.name, errors=child_errors)
+                    errors=child_errors)
                 for child_block_data, child_errors
                 in zip(value, children_errors)]
         elif isinstance(block, StreamBlock):
