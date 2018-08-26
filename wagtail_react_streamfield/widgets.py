@@ -8,41 +8,12 @@ from wagtail.core.blocks import (
     BlockWidget, StructBlock, ListBlock, FieldBlock, RichTextBlock,
     StreamBlock, Block, CharBlock, TextBlock, FloatBlock, DecimalBlock,
     RegexBlock, URLBlock, DateBlock, TimeBlock, DateTimeBlock, EmailBlock,
-    IntegerBlock, StreamValue,
+    IntegerBlock,
 )
 
 
 def to_json_script(data):
     return json.dumps(data).replace('<', '\\u003c')
-
-
-def react_to_wagtail_data(block, block_data):
-    block_value = block_data['value']
-    if isinstance(block, StreamBlock):
-        return StreamValue(block, [
-            (child_block_data['type'],
-             react_to_wagtail_data(
-                 block.child_blocks[child_block_data['type']],
-                 child_block_data),
-             child_block_data['id'])
-            for child_block_data in block_value
-        ])
-    if isinstance(block, StructBlock):
-        return block._to_struct_value([
-            (child_block_data['type'],
-             react_to_wagtail_data(
-                 block.child_blocks[child_block_data['type']],
-                 child_block_data,
-             ))
-            for child_block_data in block_data['value']
-        ])
-    if isinstance(block, ListBlock):
-        return [react_to_wagtail_data(
-            block.child_block, child_block_data)
-            for child_block_data in block_data['value']]
-    if block_value == '':
-        block_value = None
-    return block.value_from_datadict({'value': block_value}, {}, 'value')
 
 
 class NewBlockWidget(BlockWidget):
@@ -157,8 +128,8 @@ class NewBlockWidget(BlockWidget):
                 self.get_definition(key, block)
                 for key, block in self.block_def.child_blocks.items()
             ],
-            'value': self.prepare_value(None, self.block_def, value,
-                                        errors=errors),
+            'value': self.prepare_value(None,
+                                        self.block_def, value, errors=errors),
         }
         return mark_safe("""
         <script type="application/json" data-streamfield="%s">%s</script>
@@ -176,5 +147,5 @@ class NewBlockWidget(BlockWidget):
 
     def value_from_datadict(self, data, files, name):
         stream_field_data = json.loads(data.get(name))
-        return react_to_wagtail_data(self.block_def,
-                                     {'value': stream_field_data})
+        return super().value_from_datadict({'value': stream_field_data},
+                                           files, name)

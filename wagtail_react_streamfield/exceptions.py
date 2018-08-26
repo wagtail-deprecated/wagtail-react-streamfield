@@ -1,0 +1,2 @@
+class RemovedError(Exception):
+    pass
