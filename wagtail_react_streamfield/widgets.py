@@ -150,6 +150,7 @@ class NewBlockWidget(BlockWidget):
 
     def render_with_errors(self, name, value, attrs=None, errors=None):
         streamfield_config = {
+            'required': self.block_def.required,
             'minNum': self.block_def.meta.min_num,
             'maxNum': self.block_def.meta.max_num,
             'blockDefinitions': [
