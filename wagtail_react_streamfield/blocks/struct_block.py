@@ -11,12 +11,10 @@ class NewBaseStructBlock(BaseStructBlock):
             child_block.get_definition()
             for child_block in self.child_blocks.values()
         ]
-        for child_block in self.child_blocks.values():
-            if isinstance(child_block, FieldBlock):
-                title_template = child_block.get_title_template()
-                if title_template is not None:
-                    definition['titleTemplate'] = title_template
-                    break
+        for child_definition in definition['children']:
+            if 'titleTemplate' in child_definition:
+                definition['titleTemplate'] = child_definition['titleTemplate']
+                break
         return definition
 
     def js_initializer(self):
