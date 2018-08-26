@@ -3,12 +3,9 @@ from uuid import uuid4
 
 from django.forms import Media
 from django.utils.safestring import mark_safe
-from django.utils.text import capfirst
 from wagtail.core.blocks import (
     BlockWidget, StructBlock, ListBlock, FieldBlock, RichTextBlock,
-    StreamBlock, Block, CharBlock, TextBlock, FloatBlock, DecimalBlock,
-    RegexBlock, URLBlock, DateBlock, TimeBlock, DateTimeBlock, EmailBlock,
-    IntegerBlock,
+    StreamBlock,
 )
 
 
@@ -66,68 +63,12 @@ class NewBlockWidget(BlockWidget):
         data['value'] = value
         return data
 
-    @staticmethod
-    def get_title_template(key, block):
-        if isinstance(block, (CharBlock, TextBlock, FloatBlock,
-                              DecimalBlock, RegexBlock, URLBlock,
-                              DateBlock, TimeBlock, DateTimeBlock,
-                              EmailBlock, IntegerBlock)):
-            return '${%s}' % key
-
-    @classmethod
-    def get_definition(cls, key, block):
-        block_definition = {
-            'key': key,
-            'label': capfirst(block.label),
-            'required': block.required,
-            'dangerouslyRunInnerScripts': True,
-        }
-        if block.meta.icon != Block._meta_class.icon:
-            block_definition['icon'] = ('<i class=\"icon icon-%s\"></i>'
-                                        % block.meta.icon)
-        if block.meta.classname is not None:
-            block_definition['className'] = block.meta.classname
-        if isinstance(block, FieldBlock):
-            block_definition['html'] = block.render_form(
-                block.get_default(), prefix='field-__ID__')
-            title_template = cls.get_title_template(block.name, block)
-            if title_template is not None:
-                block_definition['titleTemplate'] = title_template
-        elif isinstance(block, StructBlock):
-            block_definition['isStruct'] = True
-            block_definition['children'] = [
-                cls.get_definition(k, b)
-                for k, b in block.child_blocks.items()
-            ]
-            for child_block_key, child_block in block.child_blocks.items():
-                title_template = cls.get_title_template(child_block_key,
-                                                        child_block)
-                if title_template is not None:
-                    block_definition['titleTemplate'] = title_template
-                    break
-        elif isinstance(block, ListBlock):
-            block_definition['children'] = [
-                cls.get_definition(block.name, block.child_block),
-            ]
-        elif isinstance(block, StreamBlock):
-            block_definition['children'] = [
-                cls.get_definition(k, b)
-                for k, b in block.child_blocks.items()
-            ]
-            # TODO: Modify Wagtail to add min_num & max_num to ListBlock.
-            block_definition['minNum'] = block.meta.min_num
-            block_definition['maxNum'] = block.meta.max_num
-        return block_definition
-
     def render_with_errors(self, name, value, attrs=None, errors=None):
         streamfield_config = {
             'required': self.block_def.required,
             'minNum': self.block_def.meta.min_num,
             'maxNum': self.block_def.meta.max_num,
-            'blockDefinitions': [
-                self.get_definition(key, block)
-                for key, block in self.block_def.child_blocks.items()
-            ],
+            'blockDefinitions': self.block_def.get_definition()['children'],
             'value': self.prepare_value(None,
                                         self.block_def, value, errors=errors),
         }

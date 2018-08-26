@@ -12,18 +12,21 @@ from .widgets import NewBlockWidget
 
 
 def _patch_with(original_class, new_class, *method_names):
+    def patch_original(original_method, new_method):
+        @wraps(original_method)
+        def inner(*args, **kwargs):
+            return new_method(*args, **kwargs)
+
+        return inner
+
     for method_name in method_names:
-
-        def patch_original(original_method, new_method):
-            @wraps(original_method)
-            def inner(*args, **kwargs):
-                return new_method(*args, **kwargs)
-            return inner
-
-        original_method = getattr(original_class, method_name)
+        original_method = getattr(original_class, method_name, None)
         new_method = getattr(new_class, method_name)
-        setattr(original_class, method_name,
-                patch_original(original_method, new_method))
+
+        if original_method is not None:
+            new_method = patch_original(original_method, new_method)
+
+        setattr(original_class, method_name, new_method)
 
 
 def _patch_streamfield_panel():
@@ -49,16 +52,18 @@ def patch():
     _patch_streamfield_panel()
     _patch_block_widget()
     _patch_with(Block, NewBlock,
-                'html_declarations', 'all_html_declarations')
+                'get_definition', 'html_declarations', 'all_html_declarations')
     _patch_with(BaseStreamBlock, NewBaseStreamBlock,
-                'sorted_child_blocks', 'render_list_member',
+                'get_definition', 'sorted_child_blocks', 'render_list_member',
                 'html_declarations', 'js_initializer', 'render_form',
                 'value_from_datadict', 'value_omitted_from_data')
     _patch_with(ListBlock, NewListBlock,
-                'render_list_member',
+                'get_definition', 'render_list_member',
                 'html_declarations', 'js_initializer', 'render_form',
                 'value_from_datadict', 'value_omitted_from_data')
     _patch_with(BaseStructBlock, NewBaseStructBlock,
+                'get_definition',
                 'js_initializer', 'get_form_context', 'render_form',
                 'value_from_datadict', 'value_omitted_from_data')
-    _patch_with(FieldBlock, NewFieldBlock, 'value_from_datadict')
+    _patch_with(FieldBlock, NewFieldBlock,
+                'get_definition', 'get_title_template', 'value_from_datadict')

@@ -4,6 +4,17 @@ from ..exceptions import RemovedError
 
 
 class NewBaseStreamBlock(BaseStreamBlock):
+    def get_definition(self):
+        definition = super(BaseStreamBlock, self).get_definition()
+        definition['children'] = [
+            child_block.get_definition()
+            for child_block in self.child_blocks.values()
+        ]
+        # TODO: Modify Wagtail to add min_num & max_num to ListBlock.
+        definition['minNum'] = self.meta.min_num
+        definition['maxNum'] = self.meta.max_num
+        return definition
+
     def sorted_child_blocks(self):
         raise RemovedError
 

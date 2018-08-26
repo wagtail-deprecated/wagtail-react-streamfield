@@ -4,6 +4,13 @@ from ..exceptions import RemovedError
 
 
 class NewListBlock(ListBlock):
+    def get_definition(self):
+        definition = super(ListBlock, self).get_definition()
+        definition['children'] = [
+            self.child_block.get_definition(),
+        ]
+        return definition
+
     def render_list_member(self, *args, **kwargs):
         raise RemovedError
 
