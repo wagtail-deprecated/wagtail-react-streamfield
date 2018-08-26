@@ -1,4 +1,4 @@
-from wagtail.core.blocks import BaseStructBlock, FieldBlock
+from wagtail.core.blocks import BaseStructBlock
 
 from ..exceptions import RemovedError
 
@@ -6,11 +6,11 @@ from ..exceptions import RemovedError
 class NewBaseStructBlock(BaseStructBlock):
     def get_definition(self):
         definition = super(BaseStructBlock, self).get_definition()
-        definition['isStruct'] = True
-        definition['children'] = [
-            child_block.get_definition()
-            for child_block in self.child_blocks.values()
-        ]
+        definition.update(
+            isStruct=True,
+            children=[child_block.get_definition()
+                      for child_block in self.child_blocks.values()],
+        )
         for child_definition in definition['children']:
             if 'titleTemplate' in child_definition:
                 definition['titleTemplate'] = child_definition['titleTemplate']

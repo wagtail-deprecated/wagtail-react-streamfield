@@ -6,9 +6,12 @@ from ..exceptions import RemovedError
 class NewListBlock(ListBlock):
     def get_definition(self):
         definition = super(ListBlock, self).get_definition()
-        definition['children'] = [
-            self.child_block.get_definition(),
-        ]
+        definition.update(
+            children=[self.child_block.get_definition()],
+            # TODO: Modify Wagtail to add min_num & max_num to ListBlock.
+            # minNum=self.meta.min_num,
+            # maxNum=self.meta.max_num,
+        )
         return definition
 
     def render_list_member(self, *args, **kwargs):

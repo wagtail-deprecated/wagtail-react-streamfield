@@ -14,7 +14,7 @@ class NewBlock(Block):
         }
         if self.meta.icon != Block._meta_class.icon:
             definition['icon'] = ('<i class=\"icon icon-%s\"></i>'
-                                        % self.meta.icon)
+                                  % self.meta.icon)
         if self.meta.classname is not None:
             definition['className'] = self.meta.classname
         return definition
