@@ -67,9 +67,10 @@
             .children-container .block > .block-container > header > aside > .actions > button.disabled {
               opacity: 0.2;
               pointer-events: none; }
+        .children-container .block > .block-container > header + .content-container > .content {
+          border-top: 1px solid #d3d3d3; }
       .children-container .block > .block-container > .content-container > .content {
-        padding: 12px;
-        border-top: 1px solid #d3d3d3; }
+        padding: 12px; }
     .children-container .block:hover > .block-container, .children-container .block:focus > .block-container, .children-container .block:focus-within > .block-container {
       border-color: #bbbbbb;
       box-shadow: 3px 2px 3px -1px rgba(0, 0, 0, 0.1); }
