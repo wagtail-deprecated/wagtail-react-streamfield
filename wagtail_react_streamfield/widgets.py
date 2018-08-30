@@ -1,9 +1,12 @@
+import datetime
 import json
 from json import JSONEncoder
 from uuid import uuid4
 
+from django.conf import settings
 from django.forms import Media
 from django.utils.safestring import mark_safe
+from wagtail.admin.widgets import DEFAULT_DATE_FORMAT, DEFAULT_DATETIME_FORMAT
 from wagtail.core.blocks import (
     BlockWidget, StructBlock, ListBlock, FieldBlock, RichTextBlock,
     StreamBlock, ChooserBlock,
@@ -19,9 +22,18 @@ class ConfigJSONEncoder(JSONEncoder):
 class InputJSONEncoder(JSONEncoder):
     def default(self, o):
         if isinstance(o, BlockData):
+            value = o['value']
+            if isinstance(value, datetime.datetime):
+                fmt = getattr(settings, 'WAGTAIL_DATETIME_FORMAT', DEFAULT_DATETIME_FORMAT)
+                value = value.strftime(fmt)
+            elif isinstance(value, datetime.date):
+                fmt = getattr(settings, 'WAGTAIL_DATE_FORMAT', DEFAULT_DATETIME_FORMAT)
+                value = value.strftime(fmt)
+            elif isinstance(value, datetime.time):
+                value = value.strftime('%H:%M')
             return {'id': o['id'],
                     'type': o['type'],
-                    'value': o['value']}
+                    'value': value}
         return super().default(o)
 
 
