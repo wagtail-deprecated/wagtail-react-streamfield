@@ -9,6 +9,8 @@ from wagtail.core.blocks import (
     StreamBlock,
 )
 
+from .constants import FIELD_NAME_TEMPLATE
+
 
 class ConfigJSONEncoder(DjangoJSONEncoder):
     def default(self, o):
@@ -85,7 +87,7 @@ class NewBlockWidget(BlockWidget):
             from wagtail.admin.rich_text import DraftailRichTextArea
             if errors:
                 data['html'] = block.render_form(
-                    value, prefix='field-__ID__', errors=errors)
+                    value, prefix=FIELD_NAME_TEMPLATE, errors=errors)
             if value == '':
                 value = None
             value = block.value_for_form(block.field.prepare_value(value))
