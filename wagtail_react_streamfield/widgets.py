@@ -1,22 +1,23 @@
 import json
-from json import JSONEncoder
 from uuid import uuid4
 
+from django.core.serializers.json import DjangoJSONEncoder
 from django.forms import Media
 from django.utils.safestring import mark_safe
 from wagtail.core.blocks import (
     BlockWidget, StructBlock, ListBlock, FieldBlock, RichTextBlock,
-    StreamBlock, ChooserBlock,
+    StreamBlock,
 )
 
 
-class ConfigJSONEncoder(JSONEncoder):
+class ConfigJSONEncoder(DjangoJSONEncoder):
     def default(self, o):
         if isinstance(o, BlockData):
             return o.data
+        return super().default(o)
 
 
-class InputJSONEncoder(JSONEncoder):
+class InputJSONEncoder(DjangoJSONEncoder):
     def default(self, o):
         if isinstance(o, BlockData):
             return {'id': o['id'],
