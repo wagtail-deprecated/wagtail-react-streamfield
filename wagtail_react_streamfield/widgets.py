@@ -83,6 +83,9 @@ class NewBlockWidget(BlockWidget):
         })
         if isinstance(block, FieldBlock):
             from wagtail.admin.rich_text import DraftailRichTextArea
+            if errors:
+                data['html'] = block.render_form(
+                    value, prefix='field-__ID__', errors=errors)
             if value == '':
                 value = None
             value = block.value_for_form(block.field.prepare_value(value))
