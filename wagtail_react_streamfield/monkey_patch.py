@@ -48,6 +48,15 @@ def _patch_block_widget():
     BlockField.__init__ = patch_init(BlockField.__init__)
 
 
+def _patch_list_block():
+    _patch_with(ListBlock, NewListBlock,
+                'get_definition', 'render_list_member',
+                'html_declarations', 'js_initializer', 'render_form',
+                'value_from_datadict', 'value_omitted_from_data', 'clean')
+    ListBlock._meta_class.min_num = None
+    ListBlock._meta_class.max_num = None
+
+
 def patch():
     _patch_streamfield_panel()
     _patch_block_widget()
@@ -57,10 +66,7 @@ def patch():
                 'get_definition', 'sorted_child_blocks', 'render_list_member',
                 'html_declarations', 'js_initializer', 'render_form',
                 'value_from_datadict', 'value_omitted_from_data')
-    _patch_with(ListBlock, NewListBlock,
-                'get_definition', 'render_list_member',
-                'html_declarations', 'js_initializer', 'render_form',
-                'value_from_datadict', 'value_omitted_from_data')
+    _patch_list_block()
     _patch_with(BaseStructBlock, NewBaseStructBlock,
                 'get_definition',
                 'js_initializer', 'get_form_context', 'render_form',

@@ -1,3 +1,6 @@
+from django.core.exceptions import ValidationError
+from django.forms.utils import ErrorList
+from django.utils.translation import ugettext_lazy as _
 from wagtail.core.blocks import ListBlock
 
 from ..exceptions import RemovedError
@@ -8,9 +11,8 @@ class NewListBlock(ListBlock):
         definition = super(ListBlock, self).get_definition()
         definition.update(
             children=[self.child_block.get_definition()],
-            # TODO: Modify Wagtail to add min_num & max_num to ListBlock.
-            # minNum=self.meta.min_num,
-            # maxNum=self.meta.max_num,
+            minNum=self.meta.min_num,
+            maxNum=self.meta.max_num,
         )
         return definition
 
@@ -34,3 +36,32 @@ class NewListBlock(ListBlock):
 
     def value_omitted_from_data(self, *args, **kwargs):
         raise RemovedError
+
+    def clean(self, value):
+        result = []
+        errors = []
+        for child_val in value:
+            try:
+                result.append(self.child_block.clean(child_val))
+            except ValidationError as e:
+                errors.append(ErrorList([e]))
+            else:
+                errors.append(None)
+
+        if any(errors):
+            raise ValidationError('Validation error in ListBlock',
+                                  params=errors)
+
+        if self.meta.min_num is not None and self.meta.min_num > len(value):
+            raise ValidationError(
+                _('The minimum number of items is %d') % self.meta.min_num
+            )
+        elif self.required and len(value) == 0:
+            raise ValidationError(_('This field is required.'))
+
+        if self.meta.max_num is not None and self.meta.max_num < len(value):
+            raise ValidationError(
+                _('The maximum number of items is %d') % self.meta.max_num
+            )
+
+        return value

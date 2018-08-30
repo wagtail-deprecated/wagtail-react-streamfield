@@ -60,8 +60,10 @@ class NewBlockWidget(BlockWidget):
                 for k, v in value.items()
                 if k in block.child_blocks]
         elif isinstance(block, ListBlock):
-            children_errors = ([None] * len(value) if errors is None
+            children_errors = (None if errors is None
                                else errors.as_data()[0].params)
+            if children_errors is None:
+                children_errors = [None] * len(value)
             value = [
                 self.prepare_value(
                     block, block.child_block, child_block_data,
