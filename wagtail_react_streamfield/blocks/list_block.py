@@ -1,12 +1,23 @@
 from django.core.exceptions import ValidationError
 from django.forms.utils import ErrorList
 from django.utils.translation import ugettext_lazy as _
-from wagtail.core.blocks import ListBlock
+from wagtail.core.blocks import ListBlock, Block
 
 from ..exceptions import RemovedError
 
 
 class NewListBlock(ListBlock):
+    def __init__(self, child_block, **kwargs):
+        Block.__init__(self, **kwargs)
+
+        self.child_block = (child_block() if isinstance(child_block, type)
+                            else child_block)
+
+        if not hasattr(self.meta, 'default'):
+            self.meta.default = [self.child_block.get_default()]
+
+        self.dependencies = [self.child_block]
+
     def get_definition(self):
         definition = super(ListBlock, self).get_definition()
         definition.update(

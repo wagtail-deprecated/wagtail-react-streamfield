@@ -1,9 +1,22 @@
-from wagtail.core.blocks import BaseStructBlock
+from wagtail.core.blocks import BaseStructBlock, Block
 
 from ..exceptions import RemovedError
 
 
 class NewBaseStructBlock(BaseStructBlock):
+    def __init__(self, local_blocks=None, **kwargs):
+        self._constructor_kwargs = kwargs
+
+        Block.__init__(self, **kwargs)
+
+        self.child_blocks = self.base_blocks.copy()
+        if local_blocks:
+            for name, block in local_blocks:
+                block.set_name(name)
+                self.child_blocks[name] = block
+
+        self.dependencies = self.child_blocks.values()
+
     def get_definition(self):
         definition = super(BaseStructBlock, self).get_definition()
         definition.update(
