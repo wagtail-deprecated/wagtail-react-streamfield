@@ -20,7 +20,7 @@ and report any bug you find.
 Requirements
 ------------
 
-Wagtail 2.0 or above.
+Wagtail 2.2 or above.
 
 
 Getting started
