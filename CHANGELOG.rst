@@ -1,10 +1,16 @@
 What’s new in wagtail-react-streamfield?
 ========================================
 
+0.8.6
+-----
+
+- Fixes default values support
+- Removes Wagtail 2.0 & 2.1 support to fix chooser blocks
+
 0.8.5
 -----
 
-- Added ``min_num`` and ``max_num`` support for ``ListBlock``
+- Adds ``min_num`` and ``max_num`` support for ``ListBlock``
 - Fixes duplication of remaining unsupported blocks: ``ChooserBlock`` & ``DateBlock``
 - Fixes rendering of errors on non-chooser blocks
 - Fixes a Python error when migrations use combinations of ``ListBlock`` with ``StructBlock``
