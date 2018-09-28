@@ -72,4 +72,5 @@ def patch():
                 'js_initializer', 'get_form_context', 'render_form',
                 'value_from_datadict', 'value_omitted_from_data')
     _patch_with(FieldBlock, NewFieldBlock,
-                'get_definition', 'get_title_template', 'value_from_datadict')
+                'prepare_for_react', 'get_definition', 'get_title_template',
+                'value_from_datadict')

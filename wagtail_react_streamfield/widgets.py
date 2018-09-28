@@ -86,16 +86,12 @@ class NewBlockWidget(BlockWidget):
             'hasError': bool(errors),
         })
         if isinstance(block, FieldBlock):
-            from wagtail.admin.rich_text import DraftailRichTextArea
             if errors:
                 data['html'] = block.render_form(
                     value, prefix=FIELD_NAME_TEMPLATE, errors=errors)
             if value == '':
                 value = None
-            value = block.value_for_form(block.field.prepare_value(value))
-            if isinstance(block, RichTextBlock) \
-                    and isinstance(block.field.widget, DraftailRichTextArea):
-                value = block.field.widget.translate_value(value)
+            value = block.prepare_for_react(value)
         data['value'] = value
         return data
 
