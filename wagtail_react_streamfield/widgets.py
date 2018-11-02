@@ -95,7 +95,7 @@ class NewBlockWidget(BlockWidget):
         data['value'] = value
         return data
 
-    def render_with_errors(self, name, value, attrs=None, errors=None):
+    def render_with_errors(self, name, value, attrs=None, errors=None, renderer=None):
         streamfield_config = {
             'required': self.block_def.required,
             'minNum': self.block_def.meta.min_num,
