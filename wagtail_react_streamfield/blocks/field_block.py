@@ -14,7 +14,7 @@ class NewFieldBlock(FieldBlock):
         value = self.value_for_form(self.field.prepare_value(value))
         if isinstance(self, RichTextBlock) \
                 and isinstance(self.field.widget, DraftailRichTextArea):
-            value = self.field.widget.translate_value(value)
+            value = self.field.widget.format_value(value)
         return value
 
     def get_definition(self):
