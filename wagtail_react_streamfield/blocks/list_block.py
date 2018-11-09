@@ -75,4 +75,4 @@ class NewListBlock(ListBlock):
                 _('The maximum number of items is %d') % self.meta.max_num
             )
 
-        return value
+        return result
