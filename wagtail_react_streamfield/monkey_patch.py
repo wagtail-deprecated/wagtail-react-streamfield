@@ -1,8 +1,9 @@
 from django.utils.six import wraps
 from wagtail.core.blocks import (
     BlockField, Block, BaseStreamBlock, ListBlock, BaseStructBlock, FieldBlock,
-)
+    StaticBlock)
 
+from wagtail_react_streamfield.blocks.static_block import NewStaticBlock
 from .blocks.block import NewBlock
 from .blocks.field_block import NewFieldBlock
 from .blocks.list_block import NewListBlock
@@ -74,3 +75,4 @@ def patch():
     _patch_with(FieldBlock, NewFieldBlock,
                 'prepare_for_react', 'get_definition', 'get_title_template',
                 'value_from_datadict')
+    _patch_with(StaticBlock, NewStaticBlock, 'get_definition')

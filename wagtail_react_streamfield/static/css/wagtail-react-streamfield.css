@@ -134,6 +134,8 @@
     background: #EEEEEE;
     border-radius: 3px;
     user-select: none; }
+    .children-container .add-panel .group-name {
+      margin: 7.5px 7.5px 0; }
     .children-container .add-panel button.type {
       margin: 7.5px;
       appearance: none;

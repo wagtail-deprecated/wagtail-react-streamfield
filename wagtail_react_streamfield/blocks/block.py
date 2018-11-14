@@ -17,6 +17,8 @@ class NewBlock(Block):
                                   % self.meta.icon)
         if self.meta.classname is not None:
             definition['className'] = self.meta.classname
+        if self.meta.group:
+            definition['group'] = str(self.meta.group)
         return definition
 
     def all_html_declarations(self):
