@@ -1,6 +1,14 @@
 What’s new in wagtail-react-streamfield?
 ========================================
 
+0.9.0
+-----
+
+- Adds Wagtail 2.3 support
+- Adds support for block groups
+- Adds support for static blocks
+- Upgrades to react-beautiful-dnd 10, improving fluidity by 30%
+
 0.8.6
 -----
 
