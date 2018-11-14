@@ -5,8 +5,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.forms import Media
 from django.utils.safestring import mark_safe
 from wagtail.core.blocks import (
-    BlockWidget, StructBlock, ListBlock, FieldBlock, RichTextBlock,
-    StreamBlock,
+    BlockWidget, StructBlock, ListBlock, FieldBlock, StreamBlock,
 )
 
 from .constants import FIELD_NAME_TEMPLATE
@@ -95,7 +94,8 @@ class NewBlockWidget(BlockWidget):
         data['value'] = value
         return data
 
-    def render_with_errors(self, name, value, attrs=None, errors=None, renderer=None):
+    def render_with_errors(self, name, value, attrs=None, errors=None,
+                           renderer=None):
         streamfield_config = {
             'required': self.block_def.required,
             'minNum': self.block_def.meta.min_num,
