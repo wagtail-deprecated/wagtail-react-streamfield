@@ -50,7 +50,7 @@ function createPageChooser(id, pageTypes, openAtParentId, canChooseRoot, userPer
             pageChosen({
                 id: data.id,
                 title: data.admin_display_title,
-                parentId: data.meta.parent,
+                parentId: (data.meta.parent && data.meta.parent.id) ? data.meta.parent.id : null,
                 editUrl: window.wagtailConfig.ADMIN_URLS.PAGES
                          + data.id + '/edit/'}, true);
         });
