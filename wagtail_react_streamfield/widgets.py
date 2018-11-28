@@ -1,6 +1,7 @@
 import json
 from uuid import uuid4
 
+from django.core.exceptions import NON_FIELD_ERRORS
 from django.core.serializers.json import DjangoJSONEncoder
 from django.forms import Media
 from django.utils.safestring import mark_safe
@@ -106,11 +107,17 @@ class NewBlockWidget(BlockWidget):
         }
         escaped_value = to_json_script(streamfield_config['value'],
                                        encoder=InputJSONEncoder)
+        non_block_errors = ([] if errors is None
+                            else errors.as_data()[0].params[NON_FIELD_ERRORS])
+        non_block_errors = ''.join([
+            mark_safe('<div class="help-block help-critical">%s</div>') % error
+            for error in non_block_errors])
         return mark_safe("""
         <script type="application/json" data-streamfield="%s">%s</script>
         <textarea style="display: none;" name="%s">%s</textarea>
+        %s
         """ % (name, to_json_script(streamfield_config),
-               name, escaped_value))
+               name, escaped_value, non_block_errors))
 
     @property
     def media(self):
