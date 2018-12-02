@@ -24,7 +24,7 @@ def _patch_with(original_class, new_class, *method_names):
         original_method = getattr(original_class, method_name, None)
         new_method = getattr(new_class, method_name)
 
-        if original_method is not None:
+        if original_method is not None and callable(original_method):
             new_method = patch_original(original_method, new_method)
 
         setattr(original_class, method_name, new_method)
@@ -62,7 +62,8 @@ def patch():
     _patch_streamfield_panel()
     _patch_block_widget()
     _patch_with(Block, NewBlock,
-                'get_definition', 'html_declarations', 'all_html_declarations')
+                'SIMPLE', 'COLLAPSIBLE', 'get_layout', 'get_definition',
+                'html_declarations', 'all_html_declarations')
     _patch_with(BaseStreamBlock, NewBaseStreamBlock,
                 'get_definition', 'sorted_child_blocks', 'render_list_member',
                 'html_declarations', 'js_initializer', 'render_form',
