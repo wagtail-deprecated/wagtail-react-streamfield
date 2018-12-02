@@ -95,12 +95,22 @@ class NewBlockWidget(BlockWidget):
         data['value'] = value
         return data
 
+    def get_actions_icons(self):
+        return {
+            'moveUp': '<i class="icon icon-arrow-up"></i>',
+            'moveDown': '<i class="icon icon-arrow-down"></i>',
+            'duplicate': '<i class="icon icon-plus-inverse"></i>',
+            'delete': '<i class="icon icon-bin"></i>',
+            'grip': '<i class="icon icon-grip"></i>',
+        }
+
     def render_with_errors(self, name, value, attrs=None, errors=None,
                            renderer=None):
         streamfield_config = {
             'required': self.block_def.required,
             'minNum': self.block_def.meta.min_num,
             'maxNum': self.block_def.meta.max_num,
+            'icons': self.get_actions_icons(),
             'blockDefinitions': self.block_def.get_definition()['children'],
             'value': self.prepare_value(None,
                                         self.block_def, value, errors=errors),
@@ -126,7 +136,6 @@ class NewBlockWidget(BlockWidget):
             css={'all': [
                 'css/wagtail-react-streamfield.css',
                 'css/wagtail-react-streamfield-extra.css',
-                'https://use.fontawesome.com/releases/v5.1.0/css/all.css'
             ]})
 
     def value_from_datadict(self, data, files, name):
