@@ -16,6 +16,22 @@ module.exports = (env, argv) => {
         {
           test: /\.jsx?$/,
           loader: 'babel-loader',
+          options: {
+            presets: [
+              '@babel/preset-env',
+              '@babel/preset-react'
+            ],
+            'plugins': [
+              '@babel/plugin-proposal-class-properties',
+              [
+                '@babel/plugin-proposal-decorators',
+                {
+                  'legacy': true
+                }
+              ],
+              '@babel/plugin-proposal-object-rest-spread'
+            ]
+          }
         },
         {
           test: /\.scss$/,

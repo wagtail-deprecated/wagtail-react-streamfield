@@ -1,18 +1,7 @@
 {
   "private": true,
   "devDependencies": {
-    "react-streamfield": "0.5.1"
-  },
-  "babel": {
-    "presets": [
-      "env",
-      "react"
-    ],
-    "plugins": [
-      "transform-class-properties",
-      "transform-object-rest-spread",
-      "transform-decorators-legacy"
-    ]
+    "react-streamfield": "0.6.1"
   },
   "scripts": {
     "build": "webpack --config webpack.config.js --mode production",

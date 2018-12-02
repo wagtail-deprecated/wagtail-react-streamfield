@@ -1,12 +1,13 @@
 .children-container {
   position: relative;
-  padding: 21px; }
+  padding: 21px 4px 21px 21px; }
   .children-container.is-dragging > button.add.visible {
     opacity: 0;
     pointer-events: none; }
   .children-container .block {
     position: relative;
-    padding: 4px; }
+    display: flex;
+    padding: 3px 4px 3px 6px; }
     .children-container .block.has-error > .block-container {
       border-color: #dbc7c8; }
       .children-container .block.has-error > .block-container > header {
@@ -15,21 +16,62 @@
         border-color: #dbc7c8; }
     .children-container .block.has-error:hover > .block-container, .children-container .block.has-error:focus > .block-container, .children-container .block.has-error:focus-within > .block-container {
       border-color: #cdb2b3; }
+      .children-container .block.has-error:hover > .block-container > header, .children-container .block.has-error:focus > .block-container > header, .children-container .block.has-error:focus-within > .block-container > header {
+        background: #fbefef; }
       .children-container .block.has-error:hover > .block-container > .content-container > .content, .children-container .block.has-error:focus > .block-container > .content-container > .content, .children-container .block.has-error:focus-within > .block-container > .content-container > .content {
         border-color: #cdb2b3; }
     .children-container .block > .block-container {
-      border: 1px solid #d3d3d3;
+      flex: 1 1 auto;
+      width: 0;
+      border: 1px solid #e6e6e6;
       border-radius: 3px;
-      overflow: hidden;
       background: white;
-      transition: 0.3s border-color ease-in-out; }
+      transition: border-color 0.3s ease-in-out;
+      transition-property: border-color, box-shadow; }
+      .children-container .block > .block-container.SIMPLE {
+        display: flex;
+        flex-flow: row nowrap; }
+        .children-container .block > .block-container.SIMPLE > header {
+          position: relative;
+          flex: 0 0 auto; }
+          .children-container .block > .block-container.SIMPLE > header h3 {
+            position: sticky;
+            top: 7.5px;
+            bottom: 7.5px; }
+        .children-container .block > .block-container.SIMPLE > .content-container {
+          flex: 1 1 auto;
+          display: flex;
+          flex-flow: column nowrap;
+          justify-content: space-around;
+          width: 0; }
+        .children-container .block > .block-container.SIMPLE > aside {
+          display: flex;
+          flex-flow: column nowrap;
+          align-items: flex-end;
+          padding: 8px; }
+          .children-container .block > .block-container.SIMPLE > aside .block-type {
+            margin-top: 7.5px; }
+      .children-container .block > .block-container.COLLAPSIBLE {
+        overflow: hidden; }
+        .children-container .block > .block-container.COLLAPSIBLE > header h3 {
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden; }
+          .children-container .block > .block-container.COLLAPSIBLE > header h3 .type-icon {
+            margin-right: 7.5px; }
+          .children-container .block > .block-container.COLLAPSIBLE > header h3 .block-type {
+            text-transform: none;
+            font-weight: normal;
+            font-style: italic;
+            font-size: 85%; }
+        .children-container .block > .block-container.COLLAPSIBLE > header > aside {
+          flex: 0 0 auto; }
       .children-container .block > .block-container > header {
         display: flex;
         align-items: center;
         padding: 8px;
-        background: #f5f5f5;
         user-select: none;
-        transition: 0.3s background-color ease-in-out;
+        transition: background-color 0.3s ease-in-out;
         cursor: default; }
         .children-container .block > .block-container > header.collapsible {
           cursor: pointer; }
@@ -38,48 +80,44 @@
         .children-container .block > .block-container > header h3 {
           flex: 1 1 auto;
           margin: 0;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          overflow: hidden;
           color: #888888; }
           .children-container .block > .block-container > header h3 .type-icon {
-            margin-right: 7.5px;
-            color: #888888; }
-          .children-container .block > .block-container > header h3 .block-type {
-            margin-left: 0; }
-        .children-container .block > .block-container > header .block-type {
-          margin: 0 7.5px;
-          font-weight: normal;
-          font-style: italic;
-          font-size: 85%;
-          line-height: 85%;
-          color: #888888; }
-        .children-container .block > .block-container > header > aside {
-          flex: 0 0 auto; }
-          .children-container .block > .block-container > header > aside > .actions > button {
-            appearance: none;
-            border: none;
-            background: none;
-            cursor: pointer;
             color: #888888;
-            opacity: 1;
-            transition: opacity 0.3s ease-in-out; }
-            .children-container .block > .block-container > header > aside > .actions > button.disabled {
-              opacity: 0.2;
-              pointer-events: none; }
-        .children-container .block > .block-container > header + .content-container > .content {
-          border-top: 1px solid #d3d3d3; }
+            transition: color 0.3s ease-in-out; }
+      .children-container .block > .block-container > header .block-type, .children-container .block > .block-container .block-type {
+        text-transform: uppercase;
+        text-align: right;
+        font-size: 80%;
+        line-height: 100%;
+        color: #888888; }
+      .children-container .block > .block-container > header > aside > .actions, .children-container .block > .block-container > aside > .actions {
+        white-space: nowrap; }
+        .children-container .block > .block-container > header > aside > .actions > button, .children-container .block > .block-container > aside > .actions > button {
+          appearance: none;
+          border: none;
+          background: none;
+          cursor: pointer;
+          color: #888888;
+          opacity: 1;
+          transition: opacity 0.3s ease-in-out;
+          transition-property: opacity, color;
+          font-size: 15px; }
+          .children-container .block > .block-container > header > aside > .actions > button.disabled, .children-container .block > .block-container > aside > .actions > button.disabled {
+            opacity: 0.2;
+            pointer-events: none; }
       .children-container .block > .block-container > .content-container > .content {
         padding: 12px; }
     .children-container .block:hover > .block-container, .children-container .block:focus > .block-container, .children-container .block:focus-within > .block-container {
       border-color: #bbbbbb;
       box-shadow: 3px 2px 3px -1px rgba(0, 0, 0, 0.1); }
-      .children-container .block:hover > .block-container > header h3, .children-container .block:focus > .block-container > header h3, .children-container .block:focus-within > .block-container > header h3 {
-        color: #4d4d4d; }
-        .children-container .block:hover > .block-container > header h3 .type-icon, .children-container .block:focus > .block-container > header h3 .type-icon, .children-container .block:focus-within > .block-container > header h3 .type-icon {
+      .children-container .block:hover > .block-container > header, .children-container .block:focus > .block-container > header, .children-container .block:focus-within > .block-container > header {
+        background: #f5f5f5; }
+        .children-container .block:hover > .block-container > header h3, .children-container .block:focus > .block-container > header h3, .children-container .block:focus-within > .block-container > header h3 {
           color: #4d4d4d; }
-      .children-container .block:hover > .block-container > header > aside > .actions > button, .children-container .block:focus > .block-container > header > aside > .actions > button, .children-container .block:focus-within > .block-container > header > aside > .actions > button {
-        color: #4d4d4d; }
+          .children-container .block:hover > .block-container > header h3 .type-icon, .children-container .block:focus > .block-container > header h3 .type-icon, .children-container .block:focus-within > .block-container > header h3 .type-icon {
+            color: #4d4d4d; }
+        .children-container .block:hover > .block-container > header > aside > .actions > button, .children-container .block:focus > .block-container > header > aside > .actions > button, .children-container .block:focus-within > .block-container > header > aside > .actions > button {
+          color: #4d4d4d; }
       .children-container .block:hover > .block-container > .content-container > .content, .children-container .block:focus > .block-container > .content-container > .content, .children-container .block:focus-within > .block-container > .content-container > .content {
         border-color: #bbbbbb; }
   .children-container button.add {
@@ -107,7 +145,9 @@
     .children-container button.add i {
       display: block;
       transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      font-style: normal; }
+      font-style: normal;
+      font-size: 28px;
+      line-height: 28px; }
     .children-container button.add.close i {
       transform: rotate(45deg); }
   .children-container label {
