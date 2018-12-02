@@ -1,6 +1,18 @@
 What’s new in wagtail-react-streamfield?
 ========================================
 
+1.0.0
+-----
+
+- Changes the overall look to match latest design decisions
+- Adds the ``SIMPLE`` layout
+- Makes ``SIMPLE`` the new default layout
+  for a better continuity with the old StreamField
+- Allows to customize the layout by overwriting
+  the ``Block.get_layout()`` method
+- Use Wagtail icons instead of FontAwesome icons
+- Fixes the remaining CSS integration issues
+
 0.9.0
 -----
 
