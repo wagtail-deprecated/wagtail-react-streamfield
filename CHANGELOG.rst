@@ -1,6 +1,13 @@
 What’s new in wagtail-react-streamfield?
 ========================================
 
+1.0.1
+-----
+
+- Fixes a bug where ``COLLAPSIBLE`` blocks
+  couldn’t be defined as open by default
+- Fixes the version number
+
 1.0.0
 -----
 

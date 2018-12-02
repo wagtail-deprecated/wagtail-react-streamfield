@@ -1,7 +1,7 @@
 {
   "private": true,
   "devDependencies": {
-    "react-streamfield": "0.6.1"
+    "react-streamfield": "0.6.2"
   },
   "scripts": {
     "build": "webpack --config webpack.config.js --mode production",
