@@ -1,5 +1,12 @@
 .object.stream-field {
   background-color: #F6F6F6;
+  padding-right: 20px;
+}
+
+@media (max-width: 768px) {
+  .object.stream-field {
+    padding-left: 20px;
+  }
 }
 
 .object.stream-field fieldset {

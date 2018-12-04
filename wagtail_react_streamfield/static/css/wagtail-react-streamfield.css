@@ -1,10 +1,10 @@
 .children-container {
   position: relative;
-  padding: 17px 4px 17px 34px;
+  padding: 17px 0 17px 34px;
   transition: padding 0.3s ease-in-out; }
   @media (max-width: 768px) {
     .children-container {
-      padding-left: 4px;
+      padding-left: 0;
       padding-top: 51px; } }
   .children-container.is-dragging > button.add.visible {
     opacity: 0;
@@ -12,10 +12,10 @@
   .children-container .block {
     position: relative;
     display: flex;
-    padding: 3px 4px 3px 0; }
+    margin: 3px 0; }
     @media (max-width: 768px) {
       .children-container .block {
-        margin-bottom: 34px; } }
+        margin-bottom: 37px; } }
     .children-container .block.has-error > .block-container {
       border-color: #dbc7c8; }
       .children-container .block.has-error > .block-container > header {
@@ -134,7 +134,7 @@
     height: 34px;
     appearance: none;
     border: none;
-    color: #43b1b0;
+    color: #007d7e;
     font-weight: bold;
     background: none;
     transform: translate(-100%, -50%);
@@ -181,7 +181,6 @@
     font-size: 13px; }
   .children-container .add-panel {
     position: relative;
-    margin: 4px;
     padding: 7.5px;
     background: #EEEEEE;
     border-radius: 3px;
@@ -191,7 +190,7 @@
     .children-container .add-panel button.type {
       margin: 7.5px;
       appearance: none;
-      background: #43b1b0;
+      background: #007d7e;
       color: white;
       padding: 0;
       border: none;
