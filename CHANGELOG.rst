@@ -1,6 +1,12 @@
 What’s new in wagtail-react-streamfield?
 ========================================
 
+1.0.2
+-----
+
+- Improves mobile layout
+- Enlarges the clickable area of add buttons
+
 1.0.1
 -----
 
