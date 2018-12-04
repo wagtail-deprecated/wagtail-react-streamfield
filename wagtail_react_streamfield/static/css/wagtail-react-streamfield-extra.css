@@ -1,3 +1,7 @@
+header.tab-merged {
+  overflow-x: hidden;
+}
+
 .object.stream-field {
   background-color: #F6F6F6;
   padding-right: 20px;
@@ -16,13 +20,20 @@
 .children-container .block > .block-container > header {
   margin-bottom: unset;
   color: unset;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .children-container .block > .block-container > aside > .actions > button,
 .children-container .block > .block-container > header > aside > .actions > button {
-  margin-left: 6px;
-  padding: 0;
+  padding-left: 6px;
+  padding-right: 6px;
   font-size: 140%;
+}
+
+.children-container .block > .block-container > aside > .actions > button i::before,
+.children-container .block > .block-container > header > aside > .actions > button i::before {
+  margin-right: 0;
 }
 
 .children-container .add-panel button.type .icon, .children-container .add-panel button.type .label {
