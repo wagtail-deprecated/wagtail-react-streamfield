@@ -1,6 +1,12 @@
 What’s new in wagtail-react-streamfield?
 ========================================
 
+1.0.4
+-----
+
+- Makes block type styling consistent
+- Maximizes the action buttons padding
+
 1.0.3
 -----
 
