@@ -1,6 +1,14 @@
 What’s new in wagtail-react-streamfield?
 ========================================
 
+1.0.3
+-----
+
+- Changes the teal color to the new color from Wagtail 2.3
+- Improves margins and paddings consistency with Wagtail
+- Fixes an issue on mobile devices with the panel for adding new blocks
+  that jumps during its transition
+
 1.0.2
 -----
 
