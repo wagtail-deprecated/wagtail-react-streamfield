@@ -2,6 +2,10 @@
   background-color: #F6F6F6;
 }
 
+.object.stream-field fieldset {
+  padding-bottom: 0;
+}
+
 .children-container .block > .block-container > header {
   margin-bottom: unset;
   color: unset;

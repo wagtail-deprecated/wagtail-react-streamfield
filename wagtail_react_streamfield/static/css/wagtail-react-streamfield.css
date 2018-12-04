@@ -1,13 +1,21 @@
 .children-container {
   position: relative;
-  padding: 21px 4px 21px 21px; }
+  padding: 17px 4px 17px 34px;
+  transition: padding 0.3s ease-in-out; }
+  @media (max-width: 768px) {
+    .children-container {
+      padding-left: 4px;
+      padding-top: 51px; } }
   .children-container.is-dragging > button.add.visible {
     opacity: 0;
     pointer-events: none; }
   .children-container .block {
     position: relative;
     display: flex;
-    padding: 3px 4px 3px 6px; }
+    padding: 3px 4px 3px 0; }
+    @media (max-width: 768px) {
+      .children-container .block {
+        margin-bottom: 34px; } }
     .children-container .block.has-error > .block-container {
       border-color: #dbc7c8; }
       .children-container .block.has-error > .block-container > header {
@@ -122,14 +130,14 @@
         border-color: #bbbbbb; }
   .children-container button.add {
     position: absolute;
+    width: 34px;
+    height: 34px;
     appearance: none;
     border: none;
     color: #43b1b0;
     font-weight: bold;
     background: none;
     transform: translate(-100%, -50%);
-    font-size: 30px;
-    line-height: 30px;
     padding: 0;
     cursor: pointer;
     outline: none;
@@ -142,6 +150,10 @@
     .children-container button.add.visible {
       opacity: 1;
       pointer-events: unset; }
+    @media (max-width: 768px) {
+      .children-container button.add {
+        width: 100%;
+        transform: translate(0, -100%); } }
     .children-container button.add i {
       display: block;
       transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
