@@ -117,8 +117,9 @@ class NewBlockWidget(BlockWidget):
         }
         escaped_value = to_json_script(streamfield_config['value'],
                                        encoder=InputJSONEncoder)
-        non_block_errors = ([] if errors is None
-                            else errors.as_data()[0].params[NON_FIELD_ERRORS])
+        non_block_errors = (
+            () if errors is None
+            else errors.as_data()[0].params.get(NON_FIELD_ERRORS, ()))
         non_block_errors = ''.join([
             mark_safe('<div class="help-block help-critical">%s</div>') % error
             for error in non_block_errors])
