@@ -1,6 +1,13 @@
 What’s new in wagtail-react-streamfield?
 ========================================
 
+1.0.5
+-----
+
+- Adds a real duplicate icon
+- Fix a recently introduced bug raising a 500 error when saving a page
+  with validation errors
+
 1.0.4
 -----
 
