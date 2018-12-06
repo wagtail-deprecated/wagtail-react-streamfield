@@ -136,7 +136,6 @@ class NewBlockWidget(BlockWidget):
             js=['js/wagtail-react-streamfield.js'],
             css={'all': [
                 'css/wagtail-react-streamfield.css',
-                'css/wagtail-react-streamfield-extra.css',
             ]})
 
     def value_from_datadict(self, data, files, name):
