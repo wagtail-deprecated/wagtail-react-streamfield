@@ -99,7 +99,7 @@ class NewBlockWidget(BlockWidget):
         return {
             'moveUp': '<i class="icon icon-arrow-up"></i>',
             'moveDown': '<i class="icon icon-arrow-down"></i>',
-            'duplicate': '<i class="icon icon-plus-inverse"></i>',
+            'duplicate': '<i class="icon icon-duplicate"></i>',
             'delete': '<i class="icon icon-bin"></i>',
             'grip': '<i class="icon icon-grip"></i>',
         }

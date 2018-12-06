@@ -80,3 +80,7 @@ header.tab-merged {
 .block .field-content textarea {
   max-width: 100%;
 }
+
+.icon-duplicate:before {
+    content: '\e902';
+}
