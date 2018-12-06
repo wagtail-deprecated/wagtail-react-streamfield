@@ -41,3 +41,4 @@ Screenshots
 
 .. image:: https://raw.github.com/noripyt/wagtail-react-streamfield/master/wagtail-react-streamfield-screenshot-1.png
 .. image:: https://raw.github.com/noripyt/wagtail-react-streamfield/master/wagtail-react-streamfield-screenshot-2.png
+.. image:: https://raw.github.com/noripyt/wagtail-react-streamfield/master/wagtail-react-streamfield-screenshot-3.png
