@@ -11,6 +11,7 @@ from ..constants import FIELD_NAME_TEMPLATE
 class NewFieldBlock(FieldBlock):
     def prepare_for_react(self, value):
         from wagtail.admin.rich_text import DraftailRichTextArea
+        from wagtail.admin.widgets import AdminDateInput, AdminDateTimeInput
 
         value = self.value_for_form(self.field.prepare_value(value))
         widget = self.field.widget
@@ -18,6 +19,8 @@ class NewFieldBlock(FieldBlock):
                 and isinstance(widget, DraftailRichTextArea):
             value = (widget.translate_value(value) if wagtail_version < (2, 3)
                      else widget.format_value(value))
+        if isinstance(widget, (AdminDateInput, AdminDateTimeInput)):
+            value = widget.format_value(value)
         return value
 
     def get_definition(self):
