@@ -1,6 +1,7 @@
 import json
 from uuid import uuid4
 
+import datetime
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.core.serializers.json import DjangoJSONEncoder
 from django.forms import Media
@@ -16,15 +17,30 @@ class ConfigJSONEncoder(DjangoJSONEncoder):
     def default(self, o):
         if isinstance(o, BlockData):
             return o.data
+        if isinstance(o, datetime.datetime):
+            r = o.isoformat(sep=' ')
+            if o.microsecond:
+                r = r[:23] + r[26:]
+            if r.endswith('+00:00'):
+                r = r[:-6] + 'Z'
+            return r
         return super().default(o)
 
 
 class InputJSONEncoder(DjangoJSONEncoder):
+
     def default(self, o):
         if isinstance(o, BlockData):
             return {'id': o['id'],
                     'type': o['type'],
                     'value': o['value']}
+        if isinstance(o, datetime.datetime):
+            r = o.isoformat(sep=' ')
+            if o.microsecond:
+                r = r[:23] + r[26:]
+            if r.endswith('+00:00'):
+                r = r[:-6] + 'Z'
+            return r
         return super().default(o)
 
 
