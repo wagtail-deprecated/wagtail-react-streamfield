@@ -1,6 +1,13 @@
 What’s new in wagtail-react-streamfield?
 ========================================
 
+1.0.6
+-----
+
+Fixes a formatting issue with ``AdminDateInput`` & ``AdminDateTimeInput``
+due to Wagtail’s custom formatting
+(``WAGTAIL_DATE_FORMAT`` & ``WAGTAIL_DATETIME_FORMAT``)
+
 1.0.5
 -----
 
