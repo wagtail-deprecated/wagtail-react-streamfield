@@ -1,15 +1,10 @@
 import json
-from uuid import uuid4
 
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.core.serializers.json import DjangoJSONEncoder
 from django.forms import Media
 from django.utils.safestring import mark_safe
-from wagtail.core.blocks import (
-    BlockWidget, StructBlock, ListBlock, FieldBlock, StreamBlock,
-)
-
-from .constants import FIELD_NAME_TEMPLATE
+from wagtail.core.blocks import BlockWidget
 
 
 class ConfigJSONEncoder(DjangoJSONEncoder):
@@ -46,55 +41,6 @@ class BlockData:
 
 
 class NewBlockWidget(BlockWidget):
-    def prepare_value(self, parent_block, block, value, type_name=None,
-                      errors=None):
-        if type_name is None:
-            type_name = block.name
-        if isinstance(block, StructBlock):
-            children_errors = ({} if errors is None
-                               else errors.as_data()[0].params)
-            value = [
-                self.prepare_value(
-                    block, block.child_blocks[k], v, type_name=k,
-                    errors=children_errors.get(k))
-                for k, v in value.items()
-                if k in block.child_blocks]
-        elif isinstance(block, ListBlock):
-            children_errors = (None if errors is None
-                               else errors.as_data()[0].params)
-            if children_errors is None:
-                children_errors = [None] * len(value)
-            value = [
-                self.prepare_value(
-                    block, block.child_block, child_block_data,
-                    errors=child_errors)
-                for child_block_data, child_errors
-                in zip(value, children_errors)]
-        elif isinstance(block, StreamBlock):
-            children_errors = ({} if errors is None
-                               else errors.as_data()[0].params)
-            value = [
-                self.prepare_value(
-                    block, child_block_data.block, child_block_data.value,
-                    errors=children_errors.get(i))
-                for i, child_block_data in enumerate(value)]
-        if parent_block is None:
-            return value
-        data = BlockData({
-            'id': str(uuid4()),
-            'type': type_name,
-            'hasError': bool(errors),
-        })
-        if isinstance(block, FieldBlock):
-            if errors:
-                data['html'] = block.render_form(
-                    value, prefix=FIELD_NAME_TEMPLATE, errors=errors)
-            if value == '':
-                value = None
-            value = block.prepare_for_react(value)
-        data['value'] = value
-        return data
-
     def get_actions_icons(self):
         return {
             'moveUp': '<i class="icon icon-arrow-up"></i>',
@@ -112,8 +58,8 @@ class NewBlockWidget(BlockWidget):
             'maxNum': self.block_def.meta.max_num,
             'icons': self.get_actions_icons(),
             'blockDefinitions': self.block_def.get_definition()['children'],
-            'value': self.prepare_value(None,
-                                        self.block_def, value, errors=errors),
+            'value': self.block_def.prepare_for_react(None, value,
+                                                      errors=errors),
         }
         escaped_value = to_json_script(streamfield_config['value'],
                                        encoder=InputJSONEncoder)

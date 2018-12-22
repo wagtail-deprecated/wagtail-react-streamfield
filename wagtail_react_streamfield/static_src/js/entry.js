@@ -1,1 +1,1 @@
-import 'react-streamfield';
+import 'react-streamfield/dist/react-streamfield';

@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from wagtail.core.blocks import BaseStreamBlock, StreamValue
 
 from ..exceptions import RemovedError
@@ -37,10 +39,20 @@ class NewBaseStreamBlock(BaseStreamBlock):
              self.child_blocks[child_block_data['type']].value_from_datadict(
                  child_block_data, files, prefix,
              ),
-             child_block_data['id'])
+             child_block_data.get('id', str(uuid4())))
             for child_block_data in data['value']
             if child_block_data['type'] in self.child_blocks
         ])
+
+    def prepare_value(self, value, errors=None):
+        if value is None:
+            return []
+        children_errors = ({} if errors is None
+                           else errors.as_data()[0].params)
+        return [
+            child_block_data.block.prepare_for_react(
+                self, child_block_data.value, errors=children_errors.get(i))
+            for i, child_block_data in enumerate(value)]
 
     def value_omitted_from_data(self, data, files, prefix):
         return data.get('value') is None

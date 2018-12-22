@@ -53,7 +53,8 @@ def _patch_list_block():
     _patch_with(ListBlock, NewListBlock,
                 '__init__', 'get_definition', 'render_list_member',
                 'html_declarations', 'js_initializer', 'render_form',
-                'value_from_datadict', 'value_omitted_from_data', 'clean')
+                'value_from_datadict', 'prepare_value',
+                'value_omitted_from_data', 'clean')
     ListBlock._meta_class.min_num = None
     ListBlock._meta_class.max_num = None
 
@@ -62,18 +63,20 @@ def patch():
     _patch_streamfield_panel()
     _patch_block_widget()
     _patch_with(Block, NewBlock,
-                'SIMPLE', 'COLLAPSIBLE', 'get_layout', 'get_definition',
-                'html_declarations', 'all_html_declarations')
+                'SIMPLE', 'COLLAPSIBLE', 'prepare_for_react', 'prepare_value',
+                'get_layout', 'get_definition', 'html_declarations',
+                'all_html_declarations')
     _patch_with(BaseStreamBlock, NewBaseStreamBlock,
                 'get_definition', 'sorted_child_blocks', 'render_list_member',
-                'html_declarations', 'js_initializer', 'render_form',
-                'value_from_datadict', 'value_omitted_from_data')
+                'html_declarations', 'js_initializer', 'prepare_value',
+                'render_form', 'value_from_datadict',
+                'value_omitted_from_data')
     _patch_list_block()
     _patch_with(BaseStructBlock, NewBaseStructBlock,
-                '__init__', 'get_definition',
-                'js_initializer', 'get_form_context', 'render_form',
-                'value_from_datadict', 'value_omitted_from_data')
+                '__init__', 'get_definition', 'js_initializer',
+                'get_form_context', 'render_form', 'value_from_datadict',
+                'prepare_value', 'value_omitted_from_data')
     _patch_with(FieldBlock, NewFieldBlock,
-                'prepare_for_react', 'get_definition', 'get_title_template',
-                'value_from_datadict')
+                'prepare_value', 'prepare_for_react', 'get_definition',
+                'get_title_template', 'value_from_datadict')
     _patch_with(StaticBlock, NewStaticBlock, 'get_definition')

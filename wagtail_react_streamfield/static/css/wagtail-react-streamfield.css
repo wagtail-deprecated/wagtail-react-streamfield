@@ -206,6 +206,7 @@
       .children-container .add-panel button.type .icon {
         background-color: rgba(0, 0, 0, 0.2); }
 
+
 header.tab-merged {
   overflow-x: hidden; }
 
@@ -221,7 +222,7 @@ header.tab-merged {
   padding-bottom: 0; }
 
 .icon-duplicate:before {
-  content: '\E902'; }
+  content: '\e902'; }
 
 .children-container .block > .block-container > aside > .actions > button,
 .children-container .block > .block-container > header > aside > .actions > button {

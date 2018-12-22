@@ -1,7 +1,10 @@
+from uuid import uuid4
+
 from django.utils.text import capfirst
 from wagtail.core.blocks import Block
 
 from wagtail_react_streamfield.exceptions import RemovedError
+from wagtail_react_streamfield.widgets import BlockData
 
 
 class NewBlock(Block):
@@ -10,6 +13,23 @@ class NewBlock(Block):
 
     def get_layout(self):
         return self.SIMPLE
+
+    def prepare_value(self, value, errors=None):
+        return value
+
+    def prepare_for_react(self, parent_block, value,
+                          type_name=None, errors=None):
+        if type_name is None:
+            type_name = self.name
+        value = self.prepare_value(value, errors=errors)
+        if parent_block is None:
+            return value
+        return BlockData({
+            'id': str(uuid4()),
+            'type': type_name,
+            'hasError': bool(errors),
+            'value': value,
+        })
 
     def get_definition(self):
         definition = {

@@ -2,14 +2,14 @@ from wagtail import VERSION as wagtail_version
 from wagtail.core.blocks import (
     FieldBlock, CharBlock, TextBlock, FloatBlock, DecimalBlock, RegexBlock,
     URLBlock, DateBlock, TimeBlock, DateTimeBlock, EmailBlock, IntegerBlock,
-    RichTextBlock,
+    RichTextBlock, Block,
 )
 
 from ..constants import FIELD_NAME_TEMPLATE
 
 
 class NewFieldBlock(FieldBlock):
-    def prepare_for_react(self, value):
+    def prepare_value(self, value, errors=None):
         from wagtail.admin.rich_text import DraftailRichTextArea
         from wagtail.admin.widgets import AdminDateInput, AdminDateTimeInput
 
@@ -23,10 +23,19 @@ class NewFieldBlock(FieldBlock):
             value = widget.format_value(value)
         return value
 
+    def prepare_for_react(self, parent_block, value,
+                          type_name=None, errors=None):
+        data = super(FieldBlock, self).prepare_for_react(parent_block, value,
+                                         type_name=type_name, errors=errors)
+        if errors:
+            data['html'] = self.render_form(
+                value, prefix=Block.FIELD_NAME_TEMPLATE, errors=errors)
+        return data
+
     def get_definition(self):
         definition = super(FieldBlock, self).get_definition()
         definition.update(
-            default=self.prepare_for_react(self.get_default()),
+            default=self.prepare_value(self.get_default()),
             html=self.render_form(self.get_default(),
                                   prefix=FIELD_NAME_TEMPLATE),
         )
