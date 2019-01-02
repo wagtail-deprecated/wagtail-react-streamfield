@@ -1,12 +1,11 @@
 from uuid import uuid4
 
-from django.core.exceptions import NON_FIELD_ERRORS
 from django.template.loader import render_to_string
 from django.utils.text import capfirst
-from wagtail.core.blocks import Block, StreamBlockValidationError
+from wagtail.core.blocks import Block
 
 from wagtail_react_streamfield.exceptions import RemovedError
-from wagtail_react_streamfield.widgets import BlockData
+from wagtail_react_streamfield.widgets import BlockData, get_non_block_errors
 
 
 class NewBlock(Block):
@@ -37,12 +36,7 @@ class NewBlock(Block):
 
     def get_blocks_container_html(self, errors=None):
         help_text = getattr(self.meta, 'help_text', None)
-        if isinstance(errors, StreamBlockValidationError):
-            non_block_errors = (
-                () if errors is None
-                else errors.as_data()[0].params.get(NON_FIELD_ERRORS, ()))
-        else:
-            non_block_errors = errors
+        non_block_errors = get_non_block_errors(errors)
         if help_text or non_block_errors:
             return render_to_string(
                 'wagtailadmin/block_forms/blocks_container.html',

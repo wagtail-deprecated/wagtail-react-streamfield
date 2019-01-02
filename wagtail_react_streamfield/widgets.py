@@ -3,6 +3,7 @@ import json
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.core.serializers.json import DjangoJSONEncoder
 from django.forms import Media
+from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
 from wagtail.core.blocks import BlockWidget
 
@@ -43,6 +44,17 @@ class BlockData:
         return '<BlockData %s>' % self.data
 
 
+def get_non_block_errors(errors):
+    if errors is None:
+        return ()
+    errors_data = errors.as_data()
+    if isinstance(errors, ErrorList):
+        errors_data = errors_data[0].params
+        if errors_data is None:
+            return errors
+    return errors_data.get(NON_FIELD_ERRORS, ())
+
+
 class NewBlockWidget(BlockWidget):
     def get_actions_icons(self):
         return {
@@ -66,9 +78,7 @@ class NewBlockWidget(BlockWidget):
         }
         escaped_value = to_json_script(streamfield_config['value'],
                                        encoder=InputJSONEncoder)
-        non_block_errors = (
-            () if errors is None
-            else errors.as_data()[0].params.get(NON_FIELD_ERRORS, ()))
+        non_block_errors = get_non_block_errors(errors)
         non_block_errors = ''.join([
             mark_safe('<div class="help-block help-critical">%s</div>') % error
             for error in non_block_errors])
