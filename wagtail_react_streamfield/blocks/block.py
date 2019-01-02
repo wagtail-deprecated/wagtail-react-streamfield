@@ -1,7 +1,9 @@
 from uuid import uuid4
 
+from django.core.exceptions import NON_FIELD_ERRORS
+from django.template.loader import render_to_string
 from django.utils.text import capfirst
-from wagtail.core.blocks import Block
+from wagtail.core.blocks import Block, StreamBlockValidationError
 
 from wagtail_react_streamfield.exceptions import RemovedError
 from wagtail_react_streamfield.widgets import BlockData
@@ -32,6 +34,23 @@ class NewBlock(Block):
             'hasError': bool(errors),
             'value': value,
         })
+
+    def get_blocks_container_html(self, errors=None):
+        help_text = getattr(self.meta, 'help_text', None)
+        if isinstance(errors, StreamBlockValidationError):
+            non_block_errors = (
+                () if errors is None
+                else errors.as_data()[0].params.get(NON_FIELD_ERRORS, ()))
+        else:
+            non_block_errors = errors
+        if help_text and non_block_errors:
+            return render_to_string(
+                'wagtailadmin/block_forms/blocks_container.html',
+                {
+                    'help_text': help_text,
+                    'non_block_errors': non_block_errors,
+                }
+            )
 
     def get_definition(self):
         definition = {

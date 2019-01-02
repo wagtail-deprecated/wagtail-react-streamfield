@@ -16,6 +16,9 @@ class NewBaseStreamBlock(BaseStreamBlock):
             minNum=self.meta.min_num,
             maxNum=self.meta.max_num,
         )
+        html = self.get_blocks_container_html()
+        if html is not None:
+            definition['html'] = html
         return definition
 
     def sorted_child_blocks(self):
@@ -43,6 +46,14 @@ class NewBaseStreamBlock(BaseStreamBlock):
             for child_block_data in data['value']
             if child_block_data['type'] in self.child_blocks
         ])
+
+    def prepare_for_react(self, parent_block, value,
+                          type_name=None, errors=None):
+        data = super(BaseStreamBlock, self).prepare_for_react(
+            parent_block, value, type_name=type_name, errors=errors)
+        if parent_block is not None and errors is not None:
+            data['html'] = self.get_blocks_container_html(errors=errors)
+        return data
 
     def prepare_value(self, value, errors=None):
         if value is None:

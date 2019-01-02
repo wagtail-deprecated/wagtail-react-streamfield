@@ -1,22 +1,16 @@
-@import '../../../node_modules/react-streamfield/dist/react-streamfield.css';
-
-header.tab-merged {
-  overflow-x: hidden;
-}
+@import '../../../node_modules/react-streamfield/src/index';
 
 .object.stream-field {
-  background-color: #F6F6F6;
-  padding-right: 20px;
-}
+    background-color: #F6F6F6;
+    padding-right: 20px;
 
-@media (max-width: 768px) {
-  .object.stream-field {
-    padding-left: 20px;
-  }
-}
+    fieldset {
+        padding-bottom: 0;
+    }
 
-.object.stream-field fieldset {
-  padding-bottom: 0;
+    @media (max-width: $screen-xs-max) {
+        padding-left: 20px;
+    }
 }
 
 .icon-duplicate:before {
@@ -91,6 +85,14 @@ header.tab-merged {
 
         textarea {
             max-width: 100%;
+        }
+    }
+
+    .help {
+        margin: 8px 0;
+
+        .icon-help-inverse {
+            margin-right: 0.5em;
         }
     }
 }

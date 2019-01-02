@@ -3,7 +3,7 @@
   "devDependencies": {
     "css-loader": "2.0.2",
     "mini-css-extract-plugin": "0.5.0",
-    "react-streamfield": "0.6.8",
+    "react-streamfield": "0.6.9",
     "sass-loader": "7.1.0",
     "uglifyjs-webpack-plugin": "2.0.1",
     "webpack": "4.28.2",

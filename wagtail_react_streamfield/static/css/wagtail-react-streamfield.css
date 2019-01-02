@@ -208,20 +208,14 @@
       .children-container .add-panel button.type .label {
         text-transform: uppercase; }
 
-
-header.tab-merged {
-  overflow-x: hidden; }
-
 .object.stream-field {
   background-color: #F6F6F6;
   padding-right: 20px; }
-
-@media (max-width: 768px) {
-  .object.stream-field {
-    padding-left: 20px; } }
-
-.object.stream-field fieldset {
-  padding-bottom: 0; }
+  .object.stream-field fieldset {
+    padding-bottom: 0; }
+  @media (max-width: 799px) {
+    .object.stream-field {
+      padding-left: 20px; } }
 
 .icon-duplicate:before {
   content: '\e902'; }
@@ -274,4 +268,9 @@ header.tab-merged {
   width: unset; }
   .content-container .field-content textarea {
     max-width: 100%; }
+
+.content-container .help {
+  margin: 8px 0; }
+  .content-container .help .icon-help-inverse {
+    margin-right: 0.5em; }
 
