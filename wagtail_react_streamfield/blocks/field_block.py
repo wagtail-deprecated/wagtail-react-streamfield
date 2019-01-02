@@ -35,7 +35,6 @@ class NewFieldBlock(FieldBlock):
     def get_definition(self):
         definition = super(FieldBlock, self).get_definition()
         definition.update(
-            default=self.prepare_value(self.get_default()),
             html=self.render_form(self.get_default(),
                                   prefix=FIELD_NAME_TEMPLATE),
         )

@@ -38,6 +38,7 @@ class NewBlock(Block):
             'required': self.required,
             'layout': self.get_layout(),
             'dangerouslyRunInnerScripts': True,
+            'default': self.prepare_value(self.get_default()),
         }
         if self.meta.icon != Block._meta_class.icon:
             definition['icon'] = ('<i class="icon icon-%s"></i>'
