@@ -2,7 +2,7 @@
   position: relative;
   padding: 17px 0 17px 34px;
   transition: padding 0.3s ease-in-out; }
-  @media (max-width: 768px) {
+  @media (max-width: 799px) {
     .children-container {
       padding-left: 0;
       padding-top: 51px; } }
@@ -13,7 +13,7 @@
     position: relative;
     display: flex;
     margin: 3px 0; }
-    @media (max-width: 768px) {
+    @media (max-width: 799px) {
       .children-container .block {
         margin-bottom: 37px; } }
     .children-container .block.has-error > .block-container {
@@ -152,7 +152,7 @@
     .children-container button.add.visible {
       opacity: 1;
       pointer-events: unset; }
-    @media (max-width: 768px) {
+    @media (max-width: 799px) {
       .children-container button.add {
         width: 100%;
         transform: translate(0, -100%); } }
@@ -202,9 +202,11 @@
       overflow: hidden; }
       .children-container .add-panel button.type .icon, .children-container .add-panel button.type .label {
         display: inline-block;
-        padding: 4px 8px; }
+        padding: 6px 8px; }
       .children-container .add-panel button.type .icon {
         background-color: rgba(0, 0, 0, 0.2); }
+      .children-container .add-panel button.type .label {
+        text-transform: uppercase; }
 
 
 header.tab-merged {
