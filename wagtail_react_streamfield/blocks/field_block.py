@@ -5,8 +5,6 @@ from wagtail.core.blocks import (
     RichTextBlock, Block,
 )
 
-from ..constants import FIELD_NAME_TEMPLATE
-
 
 class NewFieldBlock(FieldBlock):
     def prepare_value(self, value, errors=None):
@@ -25,8 +23,8 @@ class NewFieldBlock(FieldBlock):
 
     def prepare_for_react(self, parent_block, value,
                           type_name=None, errors=None):
-        data = super(FieldBlock, self).prepare_for_react(parent_block, value,
-                                         type_name=type_name, errors=errors)
+        data = super(FieldBlock, self).prepare_for_react(
+            parent_block, value, type_name=type_name, errors=errors)
         if errors:
             data['html'] = self.render_form(
                 value, prefix=Block.FIELD_NAME_TEMPLATE, errors=errors)

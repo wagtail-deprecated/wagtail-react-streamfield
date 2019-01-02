@@ -8,6 +8,8 @@ from wagtail_react_streamfield.widgets import BlockData
 
 
 class NewBlock(Block):
+    FIELD_NAME_TEMPLATE = 'field-__ID__'
+
     SIMPLE = 'SIMPLE'
     COLLAPSIBLE = 'COLLAPSIBLE'
 

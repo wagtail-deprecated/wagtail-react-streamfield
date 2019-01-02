@@ -63,7 +63,8 @@ def patch():
     _patch_streamfield_panel()
     _patch_block_widget()
     _patch_with(Block, NewBlock,
-                'SIMPLE', 'COLLAPSIBLE', 'prepare_for_react', 'prepare_value',
+                'FIELD_NAME_TEMPLATE', 'SIMPLE', 'COLLAPSIBLE',
+                'prepare_for_react', 'prepare_value',
                 'get_layout', 'get_definition', 'html_declarations',
                 'all_html_declarations')
     _patch_with(BaseStreamBlock, NewBaseStreamBlock,

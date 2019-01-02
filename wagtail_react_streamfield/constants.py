@@ -1,1 +1,0 @@
-FIELD_NAME_TEMPLATE = 'field-__ID__'

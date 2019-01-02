@@ -1,7 +1,5 @@
 from wagtail.core.blocks import StaticBlock, Block
 
-from ..constants import FIELD_NAME_TEMPLATE
-
 
 class NewStaticBlock(StaticBlock):
     def get_definition(self):
@@ -9,6 +7,6 @@ class NewStaticBlock(StaticBlock):
         definition.update(
             isStatic=True,
             html=self.render_form(self.get_default(),
-                                  prefix=FIELD_NAME_TEMPLATE),
+                                  prefix=self.FIELD_NAME_TEMPLATE),
         )
         return definition
