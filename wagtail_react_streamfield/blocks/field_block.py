@@ -34,10 +34,8 @@ class NewFieldBlock(FieldBlock):
 
     def get_definition(self):
         definition = super(FieldBlock, self).get_definition()
-        definition.update(
-            html=self.render_form(self.get_default(),
-                                  prefix=FIELD_NAME_TEMPLATE),
-        )
+        definition['html'] = self.render_form(self.get_default(),
+                                              prefix=self.FIELD_NAME_TEMPLATE)
         title_template = self.get_title_template()
         if title_template is not None:
             definition['titleTemplate'] = title_template

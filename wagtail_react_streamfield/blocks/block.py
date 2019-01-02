@@ -38,7 +38,6 @@ class NewBlock(Block):
             'required': self.required,
             'layout': self.get_layout(),
             'dangerouslyRunInnerScripts': True,
-            'default': self.prepare_value(self.get_default()),
         }
         if self.meta.icon != Block._meta_class.icon:
             definition['icon'] = ('<i class="icon icon-%s"></i>'
@@ -47,6 +46,8 @@ class NewBlock(Block):
             definition['className'] = self.meta.classname
         if self.meta.group:
             definition['group'] = str(self.meta.group)
+        if self.meta.default:
+            definition['default'] = self.prepare_value(self.get_default())
         return definition
 
     def all_html_declarations(self):
