@@ -53,10 +53,10 @@ class NewBaseStructBlock(BaseStructBlock):
         children_errors = ({} if errors is None
                            else errors.as_data()[0].params)
         return [
-            self.child_blocks[k].prepare_for_react(
-                self, v, type_name=k, errors=children_errors.get(k))
-            for k, v in value.items()
-            if k in self.child_blocks]
+            child_block.prepare_for_react(
+                self, value.get(k, child_block.get_default()),
+                type_name=k, errors=children_errors.get(k))
+            for k, child_block in self.child_blocks.items()]
 
     def value_omitted_from_data(self, *args, **kwargs):
         raise RemovedError
