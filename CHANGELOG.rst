@@ -1,6 +1,20 @@
 What’s new in wagtail-react-streamfield?
 ========================================
 
+1.1.0
+-----
+
+- Automatically collapses blocks on small/mobile devices
+- Increases the size of block type selection buttons while making the labels
+  uppercase
+- Adds support for help text in StreamBlock, ListBlock & StructBlock
+- Adds support for default values in StreamBlock, ListBlock & StructBlock
+- Adds support for non-block errors in non-root StreamBlock, ListBlock
+  & StructBlock
+- Applies default values to missing sub-blocks of already saved StructBlocks
+- Fixes the remaining edge cases found by updating tests upstream,
+  in https://github.com/wagtail/wagtail/pull/4942
+
 1.0.6
 -----
 
