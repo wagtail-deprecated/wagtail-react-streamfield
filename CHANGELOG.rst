@@ -1,6 +1,13 @@
 What’s new in wagtail-react-streamfield?
 ========================================
 
+1.1.1
+-----
+
+- Fixes a bug was introduced in 1.1.0 when validation fails while saving
+- Removes a rectangle visible on Safari due to a weird unicode character
+  added by accident
+
 1.1.0
 -----
 
