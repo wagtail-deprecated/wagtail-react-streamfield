@@ -5,6 +5,11 @@ $action-font-size: 18px;
 @import '../../../node_modules/react-streamfield/src/scss/index';
 
 
+.icon-duplicate:before {
+    content: '\e902';
+}
+
+
 .c-sf-container {
     // TODO: #CSSoverhaul the bse icon style here - the margin - should be reconsidered when
     // re-building the icon component as part of the CSS  These styles come from global

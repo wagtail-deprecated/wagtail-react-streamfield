@@ -203,6 +203,9 @@
     line-height: 1em;
     font-size: 13px; }
 
+.icon-duplicate:before {
+  content: '\E902'; }
+
 .c-sf-container .c-sf-button__icon .icon::before {
   margin: unset; }
 
