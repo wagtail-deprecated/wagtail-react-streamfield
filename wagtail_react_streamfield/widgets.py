@@ -5,6 +5,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.forms import Media
 from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 from wagtail.core.blocks import BlockWidget
 
 
@@ -52,30 +53,46 @@ def get_non_block_errors(errors):
         errors_data = errors_data[0].params
         if errors_data is None:
             return errors
-    return errors_data.get(NON_FIELD_ERRORS, ())
+    if isinstance(errors_data, dict):
+        return errors_data.get(NON_FIELD_ERRORS, ())
+    return ()
 
 
 class NewBlockWidget(BlockWidget):
-    def get_actions_icons(self):
+    def get_action_labels(self):
         return {
-            'moveUp': '<i class="icon icon-arrow-up"></i>',
-            'moveDown': '<i class="icon icon-arrow-down"></i>',
-            'duplicate': '<i class="icon icon-duplicate"></i>',
-            'delete': '<i class="icon icon-bin"></i>',
-            'grip': '<i class="icon icon-grip"></i>',
+            'add': _('Add'),
+            'moveUp': _('Move up'),
+            'moveDown': _('Move down'),
+            'duplicate': _('Duplicate'),
+            'delete': _('Delete'),
         }
 
-    def render_with_errors(self, name, value, attrs=None, errors=None,
-                           renderer=None):
-        streamfield_config = {
+    def get_actions_icons(self):
+        return {
+            'add': '<i aria-hidden="true">+</i>',
+            'moveUp': '<i class="icon icon-arrow-up" aria-hidden="true"></i>',
+            'moveDown': '<i class="icon icon-arrow-down" aria-hidden="true"></i>',
+            'duplicate': '<i class="icon icon-duplicate" aria-hidden="true"></i>',
+            'delete': '<i class="icon icon-bin" aria-hidden="true"></i>',
+            'grip': '<i class="icon icon-grip" aria-hidden="true"></i>',
+        }
+
+    def get_streamfield_config(self, value, errors=None):
+        return {
             'required': self.block_def.required,
             'minNum': self.block_def.meta.min_num,
             'maxNum': self.block_def.meta.max_num,
             'icons': self.get_actions_icons(),
+            'labels': self.get_action_labels(),
             'blockDefinitions': self.block_def.get_definition()['children'],
             'value': self.block_def.prepare_for_react(None, value,
                                                       errors=errors),
         }
+
+    def render_with_errors(self, name, value, attrs=None, errors=None,
+                           renderer=None):
+        streamfield_config = self.get_streamfield_config(value, errors=errors)
         escaped_value = to_json_script(streamfield_config['value'],
                                        encoder=InputJSONEncoder)
         non_block_errors = get_non_block_errors(errors)
@@ -83,11 +100,12 @@ class NewBlockWidget(BlockWidget):
             mark_safe('<div class="help-block help-critical">%s</div>') % error
             for error in non_block_errors])
         return mark_safe("""
-        <script type="application/json" data-streamfield="%s">%s</script>
         <textarea style="display: none;" name="%s">%s</textarea>
+        <script>window.streamField.init('%s', %s, document.currentScript)</script>
         %s
-        """ % (name, to_json_script(streamfield_config),
-               name, escaped_value, non_block_errors))
+        """ % (name, escaped_value,
+               name, to_json_script(streamfield_config),
+               non_block_errors))
 
     @property
     def media(self):

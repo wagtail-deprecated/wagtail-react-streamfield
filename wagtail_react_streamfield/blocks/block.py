@@ -2,7 +2,7 @@ from uuid import uuid4
 
 from django.template.loader import render_to_string
 from django.utils.text import capfirst
-from wagtail.core.blocks import Block
+from wagtail.core.blocks import Block, StreamValue
 
 from wagtail_react_streamfield.exceptions import RemovedError
 from wagtail_react_streamfield.widgets import BlockData, get_non_block_errors
@@ -24,11 +24,16 @@ class NewBlock(Block):
                           type_name=None, errors=None):
         if type_name is None:
             type_name = self.name
+        if isinstance(value, StreamValue.StreamChild):
+            block_id = value.id
+            value = value.value
+        else:
+            block_id = str(uuid4())
         value = self.prepare_value(value, errors=errors)
         if parent_block is None:
             return value
         return BlockData({
-            'id': str(uuid4()),
+            'id': block_id,
             'type': type_name,
             'hasError': bool(errors),
             'value': value,

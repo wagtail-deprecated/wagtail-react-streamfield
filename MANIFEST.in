@@ -1,2 +1,2 @@
 include README.rst LICENSE CHANGELOG.rst requirements.txt
-recursive-include wagtail_react_streamfield *.js *.css *.html
+recursive-include wagtail_react_streamfield *.js *.css *.html *.woff

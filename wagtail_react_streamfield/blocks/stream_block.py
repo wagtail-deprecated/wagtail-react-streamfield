@@ -62,7 +62,7 @@ class NewBaseStreamBlock(BaseStreamBlock):
                            else errors.as_data()[0].params)
         return [
             child_block_data.block.prepare_for_react(
-                self, child_block_data.value, errors=children_errors.get(i))
+                self, child_block_data, errors=children_errors.get(i))
             for i, child_block_data in enumerate(value)]
 
     def value_omitted_from_data(self, data, files, prefix):

@@ -17,6 +17,11 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
+          test: /\.jsx?$/,
+          loader: 'babel-loader',
+          exclude: /node_modules/,
+        },
+        {
           test: /\.scss$/,
           use: [
             MiniCssExtractPlugin.loader,
@@ -33,29 +38,5 @@ module.exports = (env, argv) => {
       }),
     ],
   };
-
-  if (argv.mode === 'production') {
-    config.optimization = {
-      minimizer: [
-        new UglifyJsPlugin({
-          cache: true,
-          parallel: true,
-          uglifyOptions: {
-            output: {
-              comments: false,
-              beautify: false
-            },
-            compress: {
-              drop_console: true,
-              hoist_funs: true,
-              passes: 2,
-              toplevel: true,
-              warnings: true
-            }
-          }
-        })
-      ]
-    }
-  }
   return config;
 };

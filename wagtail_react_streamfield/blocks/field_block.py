@@ -3,7 +3,7 @@ from wagtail.core.blocks import (
     FieldBlock, CharBlock, TextBlock, FloatBlock, DecimalBlock, RegexBlock,
     URLBlock, DateBlock, TimeBlock, DateTimeBlock, EmailBlock, IntegerBlock,
     RichTextBlock, Block,
-)
+    StreamValue)
 
 
 class NewFieldBlock(FieldBlock):
@@ -26,6 +26,8 @@ class NewFieldBlock(FieldBlock):
         data = super(FieldBlock, self).prepare_for_react(
             parent_block, value, type_name=type_name, errors=errors)
         if errors:
+            if isinstance(value, StreamValue.StreamChild):
+                value = value.value
             data['html'] = self.render_form(
                 value, prefix=Block.FIELD_NAME_TEMPLATE, errors=errors)
         return data

@@ -1,19 +1,73 @@
 {
   "private": true,
   "devDependencies": {
-    "css-loader": "2.0.2",
+    "@babel/core": "^7.1.6",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-decorators": "^7.1.6",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.1.6",
+    "@babel/preset-react": "^7.0.0",
+    "autoprefixer": "^9.4.5",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-loader": "8.0.4",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.21",
+    "core-js": "^2.6.5",
+    "css-loader": "1.0.1",
+    "custom-event-polyfill": "^1.0.6",
+    "element-closest": "^3.0.1",
     "mini-css-extract-plugin": "0.5.0",
-    "react-streamfield": "0.6.10",
+    "node-sass": "4.10.0",
+    "postcss-cli": "^6.1.1",
+    "postcss-loader": "^3.0.0",
+    "prop-types": "^15.6.0",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-redux": "^5.1.1",
+    "react-streamfield": "0.8.1",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0",
     "sass-loader": "7.1.0",
-    "uglifyjs-webpack-plugin": "2.0.1",
-    "webpack": "4.28.2",
-    "webpack-cli": "3.1.2"
+    "webpack": "^4.28.2",
+    "webpack-cli": "^3.1.2"
+  },
+  "browserslist": [
+    "Firefox ESR",
+    "ie 11",
+    "last 2 Chrome versions",
+    "last 2 ChromeAndroid versions",
+    "last 2 Edge versions",
+    "last 1 Firefox version",
+    "last 2 iOS versions",
+    "last 2 Safari versions"
+  ],
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties",
+      [
+        "@babel/plugin-proposal-decorators",
+        {
+          "legacy": true
+        }
+      ],
+      "@babel/plugin-proposal-object-rest-spread",
+      [
+        "transform-react-remove-prop-types",
+        {
+          "mode": "remove",
+          "removeImport": true,
+          "ignoreFilenames": [
+            "node_modules"
+          ]
+        }
+      ]
+    ]
   },
   "scripts": {
     "build": "webpack --config webpack.config.js --mode production",
     "start": "webpack --config webpack.config.js --mode development --watch"
-  },
-  "dependencies": {
-    "node-sass": "4.11.0"
   }
 }

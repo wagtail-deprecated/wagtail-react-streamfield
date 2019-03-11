@@ -32,72 +32,29 @@ function onChangeDateTime (picker, $input) {
 
 
 function initDateChooser(id, opts) {
-    if (window.dateTimePickerTranslations) {
-        $('#' + id).datetimepicker($.extend({
-            closeOnDateSelect: true,
-            timepicker: false,
-            scrollInput: false,
-            format: 'Y-m-d',
-            i18n: {
-                lang: window.dateTimePickerTranslations
-            },
-            lang: 'lang',
-            onGenerate: hideCurrent,
-            onChangeDateTime: onChangeDateTime,
-        }, opts || {}));
-    } else {
-        $('#' + id).datetimepicker($.extend({
-            timepicker: false,
-            scrollInput: false,
-            format: 'Y-m-d',
-            onGenerate: hideCurrent,
-            onChangeDateTime: onChangeDateTime,
-        }, opts || {}));
-    }
+    $('#' + id).datetimepicker($.extend({
+        timepicker: false,
+        scrollInput: false,
+        format: 'Y-m-d',
+        onGenerate: hideCurrent,
+        onChangeDateTime: onChangeDateTime,
+    }, opts || {}));
 }
 
 function initTimeChooser(id) {
-    if (window.dateTimePickerTranslations) {
-        $('#' + id).datetimepicker({
-            closeOnDateSelect: true,
-            datepicker: false,
-            scrollInput: false,
-            format: 'H:i',
-            i18n: {
-                lang: window.dateTimePickerTranslations
-            },
-            lang: 'lang',
-            onChangeDateTime: onChangeDateTime,
-        });
-    } else {
-        $('#' + id).datetimepicker({
-            datepicker: false,
-            format: 'H:i',
-            onChangeDateTime: onChangeDateTime,
-        });
-    }
+    $('#' + id).datetimepicker({
+        datepicker: false,
+        format: 'H:i',
+        onChangeDateTime: onChangeDateTime,
+    });
 }
 
 function initDateTimeChooser(id, opts) {
-    if (window.dateTimePickerTranslations) {
-        $('#' + id).datetimepicker($.extend({
-            closeOnDateSelect: true,
-            format: 'Y-m-d H:i',
-            scrollInput: false,
-            i18n: {
-                lang: window.dateTimePickerTranslations
-            },
-            lang: 'lang',
-            onGenerate: hideCurrent,
-            onChangeDateTime: onChangeDateTime,
-        }, opts || {}));
-    } else {
-        $('#' + id).datetimepicker($.extend({
-            format: 'Y-m-d H:i',
-            onGenerate: hideCurrent,
-            onChangeDateTime: onChangeDateTime,
-        }, opts || {}));
-    }
+    $('#' + id).datetimepicker($.extend({
+        format: 'Y-m-d H:i',
+        onGenerate: hideCurrent,
+        onChangeDateTime: onChangeDateTime,
+    }, opts || {}));
 }
 
 function InlinePanel(opts) {
@@ -200,7 +157,7 @@ function InlinePanel(opts) {
 
     self.updateAddButtonState = function() {
         if (opts.maxForms) {
-            var forms = $('> li', self.formsUl).not('.deleted');
+            var forms = $('> [data-inline-panel-child]', self.formsUl).not('.deleted');
             var addButton = $('#' + opts.formsetPrefix + '-ADD');
 
             if (forms.length >= opts.maxForms) {
@@ -265,14 +222,20 @@ function cleanForSlug(val, useURLify) {
     if (useURLify) {
         // URLify performs extra processing on the string (e.g. removing stopwords) and is more suitable
         // for creating a slug from the title, rather than sanitising a slug entered manually
-        return URLify(val, 255, unicodeSlugsEnabled);
-    } else {
-        // just do the "replace"
-        if (unicodeSlugsEnabled) {
-            return val.replace(/\s/g, '-').replace(/[&\/\\#,+()$~%.'":`@\^!*?<>{}]/g, '').toLowerCase();
-        } else {
-            return val.replace(/\s/g, '-').replace(/[^A-Za-z0-9\-\_]/g, '').toLowerCase();
+        let cleaned = URLify(val, 255, unicodeSlugsEnabled);
+
+        // if the result is blank (e.g. because the title consisted entirely of stopwords),
+        // fall through to the non-URLify method
+        if (cleaned) {
+            return cleaned;
         }
+    }
+
+    // just do the "replace"
+    if (unicodeSlugsEnabled) {
+        return val.replace(/\s/g, '-').replace(/[&\/\\#,+()$~%.'":`@\^!*?<>{}]/g, '').toLowerCase();
+    } else {
+        return val.replace(/\s/g, '-').replace(/[^A-Za-z0-9\-\_]/g, '').toLowerCase();
     }
 }
 
@@ -429,3 +392,7 @@ $(function() {
         });
     });
 });
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports.cleanForSlug = cleanForSlug;
+}
