@@ -1,6 +1,18 @@
 What’s new in wagtail-react-streamfield?
 ========================================
 
+1.2.0
+-----
+
+- Dropped Wagtail 2.2 & 2.3 support, but it may work perfectly with both these
+  versions, it was not tested on these
+- Moves the plusses between blocks (they were in the left gutter)
+- Adds the duplicate icon that was missing from the MANIFEST.in
+- Fixes ``COLLAPSIBLE`` block content previews on non-struct blocks
+- Rewrites the SCSS using BEM to avoid clashes with external CSS
+- Countless minor visual fixes
+- Major rewrite to improve code quality and extensibility
+
 1.1.1
 -----
 
