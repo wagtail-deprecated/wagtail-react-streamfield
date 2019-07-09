@@ -1,3 +1,4 @@
+import datetime, logging
 from uuid import uuid4
 
 from django.template.loader import render_to_string
@@ -6,6 +7,20 @@ from wagtail.core.blocks import Block, StreamValue
 
 from wagtail_react_streamfield.exceptions import RemovedError
 from wagtail_react_streamfield.widgets import BlockData, get_non_block_errors
+
+logger = logging.getLogger(__name__)
+
+
+BLOCK_CACHE = {}
+
+def get_cache_sig(block, **kwargs):
+    ''' Determine an appropriate cache signature that takes into account the block,
+        the parent block, and the help text.
+    '''
+    parent_block = kwargs.get('parent_block')
+    help_text = getattr(block.meta, 'help_text', None)
+    return (block.name, type(parent_block), type(block), help_text) if parent_block \
+        else (block.name, type(block), help_text)
 
 
 class NewBlock(Block):
@@ -29,15 +44,19 @@ class NewBlock(Block):
             value = value.value
         else:
             block_id = str(uuid4())
+        
+        logger.debug('Retrieve value for %s (%s): %s' % (block_id, type(self), datetime.datetime.utcnow()))
+        
         value = self.prepare_value(value, errors=errors)
         if parent_block is None:
             return value
-        return BlockData({
+        bdata = BlockData({
             'id': block_id,
             'type': type_name,
             'hasError': bool(errors),
             'value': value,
         })
+        return bdata
 
     def get_blocks_container_html(self, errors=None):
         help_text = getattr(self.meta, 'help_text', None)
@@ -51,7 +70,16 @@ class NewBlock(Block):
                 }
             )
 
-    def get_definition(self):
+    def get_definition(self, *args, **kwargs):
+
+        # Check cache for rendered definition of the block
+        csig = get_cache_sig(self, **kwargs)
+        if BLOCK_CACHE.get(csig):
+            return BLOCK_CACHE.get(csig)
+        
+        logger.debug('Prepare definition of stream field block %s (%s): %s' 
+            % (self.name, type(self), datetime.datetime.utcnow()))
+
         definition = {
             'key': self.name,
             'label': capfirst(self.label),
@@ -68,6 +96,9 @@ class NewBlock(Block):
             definition['group'] = str(self.meta.group)
         if self.meta.default:
             definition['default'] = self.prepare_value(self.get_default())
+
+        # Cache definition of block
+        BLOCK_CACHE[csig] = definition
         return definition
 
     def all_html_declarations(self):

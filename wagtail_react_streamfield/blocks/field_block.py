@@ -32,7 +32,7 @@ class NewFieldBlock(FieldBlock):
                 value, prefix=Block.FIELD_NAME_TEMPLATE, errors=errors)
         return data
 
-    def get_definition(self):
+    def get_definition(self, **kwargs):
         definition = super(FieldBlock, self).get_definition()
         definition['html'] = self.render_form(self.get_default(),
                                               prefix=self.FIELD_NAME_TEMPLATE)

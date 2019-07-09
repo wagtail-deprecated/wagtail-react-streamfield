@@ -2,7 +2,7 @@ from wagtail.core.blocks import StaticBlock, Block
 
 
 class NewStaticBlock(StaticBlock):
-    def get_definition(self):
+    def get_definition(self, **kwargs):
         definition = Block.get_definition(self)
         definition.update(
             isStatic=True,

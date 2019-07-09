@@ -17,7 +17,7 @@ class NewBaseStructBlock(BaseStructBlock):
 
         self.dependencies = self.child_blocks.values()
 
-    def get_definition(self):
+    def get_definition(self, **kwargs):
         definition = super(BaseStructBlock, self).get_definition()
         definition.update(
             isStruct=True,

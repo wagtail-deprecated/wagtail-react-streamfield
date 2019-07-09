@@ -1,9 +1,13 @@
+import logging, datetime
+
 from django.core.exceptions import ValidationError
 from django.forms.utils import ErrorList
 from django.utils.translation import ugettext_lazy as _
 from wagtail.core.blocks import ListBlock, Block
 
 from ..exceptions import RemovedError
+
+from .block import BLOCK_CACHE, get_cache_sig
 
 
 class NewListBlock(ListBlock):
@@ -18,16 +22,25 @@ class NewListBlock(ListBlock):
 
         self.dependencies = [self.child_block]
 
-    def get_definition(self):
+    def get_definition(self, **kwargs):
+
+        # Check block cache for copy of the block
+        csig = get_cache_sig(self, **kwargs)
+        if BLOCK_CACHE.get(csig):
+            return BLOCK_CACHE.get(csig)
+
         definition = super(ListBlock, self).get_definition()
         definition.update(
-            children=[self.child_block.get_definition()],
+            children=[self.child_block.get_definition(parent_block=self)],
             minNum=self.meta.min_num,
             maxNum=self.meta.max_num,
         )
         html = self.get_blocks_container_html()
         if html is not None:
             definition['html'] = html
+
+        # Cache the rendered block
+        BLOCK_CACHE[csig] = definition
         return definition
 
     def render_list_member(self, *args, **kwargs):
