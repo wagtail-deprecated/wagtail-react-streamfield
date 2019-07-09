@@ -21,8 +21,9 @@ def get_cache_sig(block, **kwargs):
     parent_block = kwargs.get('parent_block')
     help_text = getattr(block.meta, 'help_text', None)
     icon = getattr(block.meta, 'icon', None)
-    return (block.name, icon, help_text, type(block), type(parent_block)) if parent_block \
-        else (block.name, icon, help_text, type(block))
+    group = getattr(block.meta, 'group', None)
+    return (type(block), type(parent_block), block.name, icon, help_text, group) if parent_block \
+        else (type(block), block.name, icon, help_text, group)
 
 
 class NewBlock(Block):
@@ -46,8 +47,6 @@ class NewBlock(Block):
             value = value.value
         else:
             block_id = str(uuid4())
-        
-        logger.debug('Retrieve value for %s (%s): %s' % (block_id, type(self), datetime.datetime.utcnow()))
         
         value = self.prepare_value(value, errors=errors)
         if parent_block is None:
