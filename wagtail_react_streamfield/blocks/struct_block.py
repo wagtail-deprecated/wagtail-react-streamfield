@@ -1,6 +1,7 @@
 from wagtail.core.blocks import BaseStructBlock, Block
 
 from ..exceptions import RemovedError
+from .block import BLOCK_CACHE, get_cache_sig
 
 
 class NewBaseStructBlock(BaseStructBlock):
@@ -18,10 +19,14 @@ class NewBaseStructBlock(BaseStructBlock):
         self.dependencies = self.child_blocks.values()
 
     def get_definition(self, **kwargs):
+        csig = get_cache_sig(self, **kwargs)
+        if BLOCK_CACHE.get(csig):
+            return BLOCK_CACHE.get(csig)
+
         definition = super(BaseStructBlock, self).get_definition()
         definition.update(
             isStruct=True,
-            children=[child_block.get_definition()
+            children=[child_block.get_definition(parent=self)
                       for child_block in self.child_blocks.values()],
         )
         html = self.get_blocks_container_html()
@@ -31,6 +36,8 @@ class NewBaseStructBlock(BaseStructBlock):
             if 'titleTemplate' in child_definition:
                 definition['titleTemplate'] = child_definition['titleTemplate']
                 break
+        
+        BLOCK_CACHE[csig] = definition
         return definition
 
     def js_initializer(self):

@@ -19,8 +19,9 @@ def get_cache_sig(block, **kwargs):
     '''
     parent_block = kwargs.get('parent_block')
     help_text = getattr(block.meta, 'help_text', None)
-    return (block.name, type(parent_block), type(block), help_text) if parent_block \
-        else (block.name, type(block), help_text)
+    icon = getattr(block.meta, 'icon', None)
+    return (block.name, type(parent_block), type(block), icon, help_text) if parent_block \
+        else (block.name, type(block), icon, help_text)
 
 
 class NewBlock(Block):
