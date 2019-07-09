@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from django.template.loader import render_to_string
 from django.utils.text import capfirst
-from wagtail.core.blocks import Block, StreamValue
+from wagtail.core.blocks import Block, StreamValue, RichTextBlock
 
 from wagtail_react_streamfield.exceptions import RemovedError
 from wagtail_react_streamfield.widgets import BlockData, get_non_block_errors
@@ -20,8 +20,16 @@ def get_cache_sig(block, **kwargs):
     help_text = getattr(block.meta, 'help_text', None)
     icon = getattr(block.meta, 'icon', None)
     group = getattr(block.meta, 'group', None)
-    return (type(block), type(parent_block), block.name, icon, help_text, group) if parent_block \
+
+    # Create signature from block ,parent block, icon, and features
+    csig = (type(block), type(parent_block), block.name, icon, help_text, group) if parent_block \
         else (type(block), block.name, icon, help_text, group)
+
+    # For RichTextBlock add the features to the signature
+    if isinstance(block, RichTextBlock) and getattr(block, 'features', None):
+        csig = csig + (tuple(block.features),)
+    
+    return csig
 
 
 class NewBlock(Block):
