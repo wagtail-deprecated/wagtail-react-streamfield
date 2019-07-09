@@ -7,7 +7,9 @@ from wagtail.core.blocks import ListBlock, Block
 
 from ..exceptions import RemovedError
 
-from .block import BLOCK_CACHE, get_cache_sig
+from .block import get_cache_sig
+
+logger = logging.getLogger(__name__)
 
 
 class NewListBlock(ListBlock):
@@ -25,13 +27,20 @@ class NewListBlock(ListBlock):
     def get_definition(self, **kwargs):
 
         # Check block cache for copy of the block
-        csig = get_cache_sig(self, **kwargs)
-        if BLOCK_CACHE.get(csig):
-            return BLOCK_CACHE.get(csig)
+        if hasattr(self, 'block_cache'):
+            logger.debug('Get block from cache: %s (%s)' % (self.name, type(self)))
+            csig = get_cache_sig(self, **kwargs)
+            if self.block_cache.get(csig):
+                return self.block_cache.get(csig)
+
+        def child_block_definition(child_block):
+            if hasattr(self, 'block_cache'):
+                setattr(child_block, 'block_cache', self.block_cache)
+            return child_block.get_definition(parent=self)
 
         definition = super(ListBlock, self).get_definition()
         definition.update(
-            children=[self.child_block.get_definition(parent_block=self)],
+            children=[child_block_definition(self.child_block)],
             minNum=self.meta.min_num,
             maxNum=self.meta.max_num,
         )
@@ -40,7 +49,9 @@ class NewListBlock(ListBlock):
             definition['html'] = html
 
         # Cache the rendered block
-        BLOCK_CACHE[csig] = definition
+        if hasattr(self, 'block_cache'):
+            self.block_cache[csig] = definition
+
         return definition
 
     def render_list_member(self, *args, **kwargs):

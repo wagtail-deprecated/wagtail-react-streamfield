@@ -67,7 +67,7 @@ def patch():
                 'prepare_for_react', 'prepare_value', 'get_layout',
                 'get_blocks_container_html', 'get_definition',
                 'html_declarations', 'all_html_declarations')
-    _patch_with(BaseStreamBlock, NewBaseStreamBlock,
+    _patch_with(BaseStreamBlock, NewBaseStreamBlock, 
                 'get_definition', 'sorted_child_blocks', 'render_list_member',
                 'html_declarations', 'js_initializer', 'prepare_for_react',
                 'prepare_value', 'render_form', 'value_from_datadict',

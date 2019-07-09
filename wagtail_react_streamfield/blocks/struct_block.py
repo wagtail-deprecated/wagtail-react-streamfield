@@ -1,7 +1,11 @@
+import logging
+
 from wagtail.core.blocks import BaseStructBlock, Block
 
 from ..exceptions import RemovedError
-from .block import BLOCK_CACHE, get_cache_sig
+from .block import get_cache_sig
+
+logger = logging.getLogger(__name__)
 
 
 class NewBaseStructBlock(BaseStructBlock):
@@ -19,15 +23,23 @@ class NewBaseStructBlock(BaseStructBlock):
         self.dependencies = self.child_blocks.values()
 
     def get_definition(self, **kwargs):
-        csig = get_cache_sig(self, **kwargs)
-        if BLOCK_CACHE.get(csig):
-            return BLOCK_CACHE.get(csig)
+        
+        if hasattr(self, 'block_cache'):
+            logger.debug('Get block from cache: %s (%s)' % (self.name, type(self)))
+            csig = get_cache_sig(self, **kwargs)
+            if self.block_cache.get(csig):
+                return self.block_cache.get(csig)
+
+        def child_block_definition(child_block):
+            if hasattr(self, 'block_cache'):
+                setattr(child_block, 'block_cache', self.block_cache)
+            return child_block.get_definition(parent=self)
 
         definition = super(BaseStructBlock, self).get_definition()
         definition.update(
             isStruct=True,
-            children=[child_block.get_definition(parent=self)
-                      for child_block in self.child_blocks.values()],
+            children=[child_block_definition(child_block)
+                for child_block in self.child_blocks.values()],
         )
         html = self.get_blocks_container_html()
         if html is not None:
@@ -37,7 +49,10 @@ class NewBaseStructBlock(BaseStructBlock):
                 definition['titleTemplate'] = child_definition['titleTemplate']
                 break
         
-        BLOCK_CACHE[csig] = definition
+        # Cache block
+        if hasattr(self, 'block_cache'):
+            self.block_cache[csig] = definition
+
         return definition
 
     def js_initializer(self):

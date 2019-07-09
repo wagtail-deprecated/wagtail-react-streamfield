@@ -1,31 +1,35 @@
-import logging, datetime
+import logging, datetime, six
 from uuid import uuid4
 
 from wagtail.core.blocks import BaseStreamBlock, StreamValue
 
 from ..exceptions import RemovedError
 
-from .block import BLOCK_CACHE, get_cache_sig
+from .block import get_cache_sig
 
 logger = logging.getLogger(__name__)
 
 
 class NewBaseStreamBlock(BaseStreamBlock):
-    
+
     def get_definition(self, **kwargs):
 
         # Check cache for rendered definition of the block
-        csig = get_cache_sig(self, **kwargs)
-        if BLOCK_CACHE.get(csig):
-            return BLOCK_CACHE.get(csig)
-        
-        logger.debug('Prepare definition of stream field block %s (%s): %s' 
-            % (self.name, type(self), datetime.datetime.utcnow()))
+        if hasattr(self, 'block_cache'):
+            logger.debug('Get block from cache: %s (%s)' % (self.name, type(self)))
+            csig = get_cache_sig(self, **kwargs)
+            if self.block_cache.get(csig):
+                return self.block_cache.get(csig)
+
+        def child_block_definition(child_block):
+            if hasattr(self, 'block_cache'):
+                setattr(child_block, 'block_cache', self.block_cache)
+            return child_block.get_definition(parent=self)
 
         definition = super(BaseStreamBlock, self).get_definition()
         definition.update(
             children=[
-                child_block.get_definition(parent_block=self) for child_block in self.child_blocks.values()
+                child_block_definition(child_block) for child_block in self.child_blocks.values()
             ],
             minNum=self.meta.min_num,
             maxNum=self.meta.max_num,
@@ -35,7 +39,9 @@ class NewBaseStreamBlock(BaseStreamBlock):
             definition['html'] = html
 
         # Cache definition of block
-        BLOCK_CACHE[csig] = definition
+        if hasattr(self, 'block_cache'):
+            self.block_cache[csig] = definition
+        
         return definition
 
     def sorted_child_blocks(self):
