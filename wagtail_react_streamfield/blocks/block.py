@@ -17,11 +17,12 @@ def get_cache_sig(block, **kwargs):
     ''' Determine an appropriate cache signature that takes into account the block,
         the parent block, and the help text.
     '''
+    # Retrieve parent block, help text, and icon from block attributes
     parent_block = kwargs.get('parent_block')
     help_text = getattr(block.meta, 'help_text', None)
     icon = getattr(block.meta, 'icon', None)
-    return (block.name, type(parent_block), type(block), icon, help_text) if parent_block \
-        else (block.name, type(block), icon, help_text)
+    return (block.name, icon, help_text, type(block), type(parent_block)) if parent_block \
+        else (block.name, icon, help_text, type(block))
 
 
 class NewBlock(Block):
@@ -89,8 +90,7 @@ class NewBlock(Block):
             'dangerouslyRunInnerScripts': True,
         }
         if self.meta.icon != Block._meta_class.icon:
-            definition['icon'] = ('<i class="icon icon-%s"></i>'
-                                  % self.meta.icon)
+            definition['icon'] = ('<i class="icon icon-%s"></i>' % self.meta.icon)
         if self.meta.classname is not None:
             definition['className'] = self.meta.classname
         if self.meta.group:
