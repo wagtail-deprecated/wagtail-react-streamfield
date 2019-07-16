@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from django.template.loader import render_to_string
 from django.utils.text import capfirst
-from wagtail.core.blocks import Block, StreamValue, RichTextBlock
+from wagtail.core.blocks import Block, StreamValue, RichTextBlock, PageChooserBlock
 
 from wagtail_react_streamfield.exceptions import RemovedError
 from wagtail_react_streamfield.widgets import BlockData, get_non_block_errors
@@ -28,6 +28,10 @@ def get_cache_sig(block, **kwargs):
     # For RichTextBlock add the features to the signature
     if isinstance(block, RichTextBlock) and getattr(block, 'features', None):
         csig = csig + (tuple(block.features),)
+
+    # For PageChooserBlock add the page types to the signature
+    elif isinstance(block, PageChooserBlock) and getattr(block, 'target_model', None):
+        csig = csig + (tuple(block.target_model) if isinstance(block.target_model, (tuple, list)) else (block.target_model,))
     
     return csig
 
