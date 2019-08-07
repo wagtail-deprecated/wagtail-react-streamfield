@@ -73,6 +73,13 @@ $action-font-size: 18px;
             max-width: unset;
             // Workaround to make sure blocks do not overflow horizontally.
             min-width: 0;
+            input[type="radio"] {
+                margin-bottom: 1.1em;
+                vertical-align: middle;
+                &::before {
+                    top: unset;
+                }
+            }
         }
 
         .block_field > .field-content {
