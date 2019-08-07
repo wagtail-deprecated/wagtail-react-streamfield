@@ -1,6 +1,24 @@
 What’s new in wagtail-react-streamfield?
 ========================================
 
+1.3.0
+-----
+
+- Dropped Wagtail < 2.6 support
+- Removes layouts, only a single layout exists now, a mix of the best parts of
+  the former ``SIMPLE`` of ``COLLAPSIBLE``
+- Adds ``closed`` attribute in the ``Meta`` of blocks to set by block type
+  whether they should be closed on page editor load (defaults to ``False``)
+- Adds support for collapsible nested struct blocks
+- Speeds up server-side page editor load
+- Fixes two issues with radio buttons
+- Fixes an issue with missing IDs in StreamBlocks
+  (including the root StreamBlock)
+- Fixes callable default values
+- Fixes the dynamic title of the children of a ``ListBlock``
+- Fixes minor CSS details
+
+
 1.2.0
 -----
 

@@ -20,7 +20,7 @@ and report any bug you find.
 Requirements
 ------------
 
-Wagtail 2.4 or above.
+Wagtail 2.6 or above.
 
 
 Getting started
@@ -34,6 +34,20 @@ It’s really easy to setup, like most NoriPyt packages:
   & ``'wagtail.snippets'``
 
 That’s it!
+
+
+Usage
+-----
+
+wagtail-react-streamfield has the same class API as the regular StreamField.
+What changes:
+
+``Meta`` attributes (or passed to __init__)
+...........................................
+
+``closed``
+  Set to ``True`` to close all blocks of this type when loading the page.
+  Defaults to ``False``.
 
 
 Screenshots
