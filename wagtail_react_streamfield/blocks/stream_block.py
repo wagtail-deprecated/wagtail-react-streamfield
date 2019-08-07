@@ -3,6 +3,7 @@ from uuid import uuid4
 from wagtail.core.blocks import BaseStreamBlock, StreamValue
 
 from ..exceptions import RemovedError
+from ..widgets import BlockData
 
 
 class NewBaseStreamBlock(BaseStreamBlock):
@@ -16,7 +17,7 @@ class NewBaseStreamBlock(BaseStreamBlock):
             minNum=self.meta.min_num,
             maxNum=self.meta.max_num,
         )
-        html = self.get_blocks_container_html()
+        html = self.get_instance_html([])
         if html is not None:
             definition['html'] = html
         return definition
@@ -47,23 +48,29 @@ class NewBaseStreamBlock(BaseStreamBlock):
             if child_block_data['type'] in self.child_blocks
         ])
 
-    def prepare_for_react(self, parent_block, value,
-                          type_name=None, errors=None):
-        data = super(BaseStreamBlock, self).prepare_for_react(
-            parent_block, value, type_name=type_name, errors=errors)
-        if parent_block is not None and errors is not None:
-            data['html'] = self.get_blocks_container_html(errors=errors)
-        return data
-
     def prepare_value(self, value, errors=None):
         if value is None:
             return []
         children_errors = ({} if errors is None
                            else errors.as_data()[0].params)
-        return [
-            child_block_data.block.prepare_for_react(
-                self, child_block_data, errors=children_errors.get(i))
-            for i, child_block_data in enumerate(value)]
+        prepared_value = []
+        for i, stream_child in enumerate(value):
+            child_errors = children_errors.get(i)
+            child_block = stream_child.block
+            child_value = stream_child.value
+            html = child_block.get_instance_html(child_value,
+                                                 errors=child_errors)
+            child_value = BlockData({
+                'id': stream_child.id,
+                'type': child_block.name,
+                'hasError': bool(child_errors),
+                'value': child_block.prepare_value(child_value,
+                                                   errors=child_errors),
+            })
+            if html is not None:
+                child_value['html'] = html
+            prepared_value.append(child_value)
+        return prepared_value
 
     def value_omitted_from_data(self, data, files, prefix):
         return data.get('value') is None

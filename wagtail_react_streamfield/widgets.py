@@ -86,8 +86,7 @@ class NewBlockWidget(BlockWidget):
             'icons': self.get_actions_icons(),
             'labels': self.get_action_labels(),
             'blockDefinitions': self.block_def.get_definition()['children'],
-            'value': self.block_def.prepare_for_react(None, value,
-                                                      errors=errors),
+            'value': self.block_def.prepare_value(value, errors=errors),
         }
 
     def render_with_errors(self, name, value, attrs=None, errors=None,

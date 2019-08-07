@@ -1,45 +1,33 @@
-from uuid import uuid4
-
 from django.template.loader import render_to_string
 from django.utils.text import capfirst
-from wagtail.core.blocks import Block, StreamValue
+from wagtail.core.blocks import Block
 
 from wagtail_react_streamfield.exceptions import RemovedError
-from wagtail_react_streamfield.widgets import BlockData, get_non_block_errors
+from wagtail_react_streamfield.widgets import get_non_block_errors
 
 
 class NewBlock(Block):
     FIELD_NAME_TEMPLATE = 'field-__ID__'
 
-    SIMPLE = 'SIMPLE'
-    COLLAPSIBLE = 'COLLAPSIBLE'
-
-    def get_layout(self):
-        return self.SIMPLE
+    def get_default(self):
+        default = self.meta.default
+        if callable(default):
+            default = default()
+        return default
 
     def prepare_value(self, value, errors=None):
+        """
+        Returns the value as it will be displayed in react-streamfield.
+        """
         return value
 
-    def prepare_for_react(self, parent_block, value,
-                          type_name=None, errors=None):
-        if type_name is None:
-            type_name = self.name
-        if isinstance(value, StreamValue.StreamChild):
-            block_id = value.id
-            value = value.value
-        else:
-            block_id = str(uuid4())
-        value = self.prepare_value(value, errors=errors)
-        if parent_block is None:
-            return value
-        return BlockData({
-            'id': block_id,
-            'type': type_name,
-            'hasError': bool(errors),
-            'value': value,
-        })
+    def get_instance_html(self, value, errors=None):
+        """
+        Returns the HTML template generated for a given value.
 
-    def get_blocks_container_html(self, errors=None):
+        That HTML will be displayed as the block content panel
+        in react-streamfield. It is usually not rendered
+        """
         help_text = getattr(self.meta, 'help_text', None)
         non_block_errors = get_non_block_errors(errors)
         if help_text or non_block_errors:
@@ -56,7 +44,7 @@ class NewBlock(Block):
             'key': self.name,
             'label': capfirst(self.label),
             'required': self.required,
-            'layout': self.get_layout(),
+            'closed': self.meta.closed,
             'dangerouslyRunInnerScripts': True,
         }
         if self.meta.icon != Block._meta_class.icon:

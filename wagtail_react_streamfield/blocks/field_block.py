@@ -3,7 +3,7 @@ from wagtail.core.blocks import (
     FieldBlock, CharBlock, TextBlock, FloatBlock, DecimalBlock, RegexBlock,
     URLBlock, DateBlock, TimeBlock, DateTimeBlock, EmailBlock, IntegerBlock,
     RichTextBlock, Block,
-    StreamValue)
+)
 
 
 class NewFieldBlock(FieldBlock):
@@ -21,16 +21,10 @@ class NewFieldBlock(FieldBlock):
             value = widget.format_value(value)
         return value
 
-    def prepare_for_react(self, parent_block, value,
-                          type_name=None, errors=None):
-        data = super(FieldBlock, self).prepare_for_react(
-            parent_block, value, type_name=type_name, errors=errors)
+    def get_instance_html(self, value, errors=None):
         if errors:
-            if isinstance(value, StreamValue.StreamChild):
-                value = value.value
-            data['html'] = self.render_form(
-                value, prefix=Block.FIELD_NAME_TEMPLATE, errors=errors)
-        return data
+            return self.render_form(value, prefix=Block.FIELD_NAME_TEMPLATE,
+                                    errors=errors)
 
     def get_definition(self):
         definition = super(FieldBlock, self).get_definition()
@@ -45,7 +39,7 @@ class NewFieldBlock(FieldBlock):
         if isinstance(self, (CharBlock, TextBlock, FloatBlock,
                              DecimalBlock, RegexBlock, URLBlock,
                              DateBlock, TimeBlock, DateTimeBlock,
-                             EmailBlock, IntegerBlock)):
+                             EmailBlock, IntegerBlock)) and self.name:
             return '${%s}' % self.name
 
     def value_from_datadict(self, data, files, prefix):
