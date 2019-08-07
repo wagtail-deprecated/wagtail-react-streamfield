@@ -1,3 +1,4 @@
+from django.utils.functional import cached_property
 from uuid import uuid4
 
 from django.core.exceptions import ValidationError
@@ -21,10 +22,11 @@ class NewListBlock(ListBlock):
 
         self.dependencies = [self.child_block]
 
-    def get_definition(self):
-        definition = super(ListBlock, self).get_definition()
+    @cached_property
+    def definition(self):
+        definition = super(ListBlock, self).definition
         definition.update(
-            children=[self.child_block.get_definition()],
+            children=[self.child_block.definition],
             minNum=self.meta.min_num,
             maxNum=self.meta.max_num,
         )

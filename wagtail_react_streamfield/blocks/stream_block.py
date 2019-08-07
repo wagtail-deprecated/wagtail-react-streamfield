@@ -1,5 +1,6 @@
 from uuid import uuid4
 
+from django.utils.functional import cached_property
 from wagtail.core.blocks import BaseStreamBlock, StreamValue
 
 from ..exceptions import RemovedError
@@ -7,11 +8,12 @@ from ..widgets import BlockData
 
 
 class NewBaseStreamBlock(BaseStreamBlock):
-    def get_definition(self):
-        definition = super(BaseStreamBlock, self).get_definition()
+    @cached_property
+    def definition(self):
+        definition = super(BaseStreamBlock, self).definition
         definition.update(
             children=[
-                child_block.get_definition()
+                child_block.definition
                 for child_block in self.child_blocks.values()
             ],
             minNum=self.meta.min_num,

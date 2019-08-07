@@ -1,4 +1,5 @@
 from django.template.loader import render_to_string
+from django.utils.functional import cached_property
 from django.utils.text import capfirst
 from wagtail.core.blocks import Block
 
@@ -39,7 +40,8 @@ class NewBlock(Block):
                 }
             )
 
-    def get_definition(self):
+    @cached_property
+    def definition(self):
         definition = {
             'key': self.name,
             'label': capfirst(self.label),

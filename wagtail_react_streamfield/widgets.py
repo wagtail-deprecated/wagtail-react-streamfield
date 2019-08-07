@@ -85,7 +85,7 @@ class NewBlockWidget(BlockWidget):
             'maxNum': self.block_def.meta.max_num,
             'icons': self.get_actions_icons(),
             'labels': self.get_action_labels(),
-            'blockDefinitions': self.block_def.get_definition()['children'],
+            'blockDefinitions': self.block_def.definition['children'],
             'value': self.block_def.prepare_value(value, errors=errors),
         }
 

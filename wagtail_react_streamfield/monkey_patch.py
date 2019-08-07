@@ -51,7 +51,7 @@ def _patch_block_widget():
 
 def _patch_list_block():
     _patch_with(ListBlock, NewListBlock,
-                '__init__', 'get_definition', 'render_list_member',
+                '__init__', 'definition', 'render_list_member',
                 'html_declarations', 'js_initializer', 'render_form',
                 'value_from_datadict', 'prepare_value',
                 'value_omitted_from_data', 'clean')
@@ -64,19 +64,19 @@ def patch():
     _patch_block_widget()
     _patch_with(Block, NewBlock,
                 'FIELD_NAME_TEMPLATE', 'get_default', 'prepare_value',
-                'get_instance_html', 'get_definition', 'html_declarations',
+                'get_instance_html', 'definition', 'html_declarations',
                 'all_html_declarations')
     Block._meta_class.closed = False
     _patch_with(BaseStreamBlock, NewBaseStreamBlock,
-                'get_definition', 'sorted_child_blocks', 'render_list_member',
+                'definition', 'sorted_child_blocks', 'render_list_member',
                 'html_declarations', 'js_initializer', 'prepare_value',
                 'render_form', 'value_from_datadict', 'value_omitted_from_data')
     _patch_list_block()
     _patch_with(BaseStructBlock, NewBaseStructBlock,
-                '__init__', 'get_definition', 'js_initializer',
+                '__init__', 'definition', 'js_initializer',
                 'get_form_context', 'render_form', 'value_from_datadict',
                 'prepare_value', 'value_omitted_from_data')
     _patch_with(FieldBlock, NewFieldBlock,
-                'prepare_value', 'get_definition', 'get_title_template',
+                'prepare_value', 'definition', 'get_title_template',
                 'value_from_datadict')
-    _patch_with(StaticBlock, NewStaticBlock, 'get_definition')
+    _patch_with(StaticBlock, NewStaticBlock, 'definition')

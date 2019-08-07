@@ -1,9 +1,11 @@
+from django.utils.functional import cached_property
 from wagtail.core.blocks import StaticBlock, Block
 
 
 class NewStaticBlock(StaticBlock):
-    def get_definition(self):
-        definition = Block.get_definition(self)
+    @cached_property
+    def definition(self):
+        definition = Block.definition.func(self)
         definition.update(
             isStatic=True,
             html=self.render_form(self.get_default(),

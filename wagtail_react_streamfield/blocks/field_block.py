@@ -1,3 +1,4 @@
+from django.utils.functional import cached_property
 from wagtail.core.blocks import (
     FieldBlock, CharBlock, TextBlock, FloatBlock, DecimalBlock, RegexBlock,
     URLBlock, DateBlock, TimeBlock, DateTimeBlock, EmailBlock, IntegerBlock,
@@ -24,8 +25,9 @@ class NewFieldBlock(FieldBlock):
             return self.render_form(value, prefix=Block.FIELD_NAME_TEMPLATE,
                                     errors=errors)
 
-    def get_definition(self):
-        definition = super(FieldBlock, self).get_definition()
+    @cached_property
+    def definition(self):
+        definition = super(FieldBlock, self).definition
         definition['html'] = self.render_form(self.get_default(),
                                               prefix=self.FIELD_NAME_TEMPLATE)
         title_template = self.get_title_template()
