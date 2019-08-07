@@ -1,4 +1,3 @@
-from wagtail import VERSION as wagtail_version
 from wagtail.core.blocks import (
     FieldBlock, CharBlock, TextBlock, FloatBlock, DecimalBlock, RegexBlock,
     URLBlock, DateBlock, TimeBlock, DateTimeBlock, EmailBlock, IntegerBlock,
@@ -15,8 +14,7 @@ class NewFieldBlock(FieldBlock):
         widget = self.field.widget
         if isinstance(self, RichTextBlock) \
                 and isinstance(widget, DraftailRichTextArea):
-            value = (widget.translate_value(value) if wagtail_version < (2, 3)
-                     else widget.format_value(value))
+            value = widget.format_value(value)
         if isinstance(widget, (AdminDateInput, AdminDateTimeInput)):
             value = widget.format_value(value)
         return value
