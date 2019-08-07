@@ -61,7 +61,7 @@ class NewBaseStreamBlock(BaseStreamBlock):
             html = child_block.get_instance_html(child_value,
                                                  errors=child_errors)
             child_value = BlockData({
-                'id': stream_child.id or uuid4(),
+                'id': stream_child.id or str(uuid4()),
                 'type': child_block.name,
                 'hasError': bool(child_errors),
                 'value': child_block.prepare_value(child_value,
