@@ -1,6 +1,11 @@
 What’s new in wagtail-react-streamfield?
 ========================================
 
+1.3.1
+-----
+
+Fixes another issue with radio buttons (the serialization was not right)
+
 1.3.0
 -----
 
