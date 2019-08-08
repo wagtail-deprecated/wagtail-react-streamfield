@@ -1,6 +1,12 @@
 What’s new in wagtail-react-streamfield?
 ========================================
 
+1.3.3
+-----
+
+Fixes a packaging issue due to a setuptools bug (it doesn’t clean its
+workspace before rebuilding, leading to extra unwanted files in the package)
+
 1.3.2
 -----
 
