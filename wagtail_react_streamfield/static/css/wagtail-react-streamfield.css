@@ -153,7 +153,7 @@
       .c-sf-block__actions__single:not(:last-of-type) {
         margin-right: 3px; }
       .c-sf-block__actions__single:focus, .c-sf-block__actions__single:hover {
-        background-color: #eee; }
+        background-color: rgba(0, 0, 0, 0.05); }
         .c-sf-block__actions__single:focus i, .c-sf-block__actions__single:hover i {
           color: #333; }
       .c-sf-block__actions__single i {
