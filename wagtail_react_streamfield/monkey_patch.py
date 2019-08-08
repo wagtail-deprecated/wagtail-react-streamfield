@@ -77,6 +77,6 @@ def patch():
                 'get_form_context', 'render_form', 'value_from_datadict',
                 'prepare_value', 'value_omitted_from_data')
     _patch_with(FieldBlock, NewFieldBlock,
-                'prepare_value', 'definition', 'get_title_template',
-                'value_from_datadict')
+                'prepare_value', 'definition', 'get_instance_html',
+                'get_title_template', 'value_from_datadict')
     _patch_with(StaticBlock, NewStaticBlock, 'definition')
