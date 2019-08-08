@@ -1,6 +1,13 @@
 What’s new in wagtail-react-streamfield?
 ========================================
 
+1.3.2
+-----
+
+Fixes an issue with collapsible ``FieldPanel``
+(nothing related to StreamFields) no longer working properly due to an
+overridden JavaScript file lagging behind the official version
+
 1.3.1
 -----
 
