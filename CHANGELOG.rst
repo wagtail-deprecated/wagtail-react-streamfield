@@ -1,6 +1,11 @@
 What’s new in wagtail-react-streamfield?
 ========================================
 
+1.3.4
+-----
+
+Fixes the broken JavaScript from TableBlock
+
 1.3.3
 -----
 
@@ -35,6 +40,9 @@ Fixes another issue with radio buttons (the serialization was not right)
 - Fixes callable default values
 - Fixes the dynamic title of the children of a ``ListBlock``
 - Fixes minor CSS details
+- Renamed ``Block.get_definition()`` to a ``Block.definition`` cached property
+  (overriding it with a simple ``@property`` works, but it will be faster
+  with ``@cached_property`` from ``django.utils.functional``)
 
 
 1.2.0
