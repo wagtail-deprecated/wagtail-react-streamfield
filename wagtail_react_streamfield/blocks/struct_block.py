@@ -58,8 +58,9 @@ class NewBaseStructBlock(BaseStructBlock):
         ])
 
     def prepare_value(self, value, errors=None):
-        children_errors = ({} if errors is None
-                           else errors.as_data()[0].params)
+        children_errors = self.get_children_errors(errors)
+        if children_errors is None:
+            children_errors = {}
         prepared_value = []
         for k, child_block in self.child_blocks.items():
             child_errors = (None if children_errors is None
@@ -71,7 +72,8 @@ class NewBaseStructBlock(BaseStructBlock):
                 'id': str(uuid4()),
                 'type': k,
                 'hasError': bool(child_errors),
-                'value': child_block.prepare_value(child_value, errors=errors),
+                'value': child_block.prepare_value(child_value,
+                                                   errors=child_errors),
             })
             if html is not None:
                 child_value['html'] = html

@@ -53,8 +53,9 @@ class NewBaseStreamBlock(BaseStreamBlock):
     def prepare_value(self, value, errors=None):
         if value is None:
             return []
-        children_errors = ({} if errors is None
-                           else errors.as_data()[0].params)
+        children_errors = self.get_children_errors(errors)
+        if children_errors is None:
+            children_errors = {}
         prepared_value = []
         for i, stream_child in enumerate(value):
             child_errors = children_errors.get(i)

@@ -16,6 +16,19 @@ class NewBlock(Block):
             default = default()
         return default
 
+    def get_children_errors(self, errors):
+        if errors:
+            if len(errors) > 1:
+                # We rely on Block.get_children_errors throwing
+                # a single ValidationError with a specially crafted 'params'
+                # attribute that we can pull apart and distribute
+                # to the child blocks.
+                raise TypeError(
+                    'Block.get_children_errors unexpectedly '
+                    'received multiple errors.'
+                )
+            return errors.as_data()[0].params
+
     def prepare_value(self, value, errors=None):
         """
         Returns the value as it will be displayed in react-streamfield.

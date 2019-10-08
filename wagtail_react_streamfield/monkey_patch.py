@@ -63,9 +63,9 @@ def patch():
     _patch_streamfield_panel()
     _patch_block_widget()
     _patch_with(Block, NewBlock,
-                'FIELD_NAME_TEMPLATE', 'get_default', 'prepare_value',
-                'get_instance_html', 'definition', 'html_declarations',
-                'all_html_declarations')
+                'FIELD_NAME_TEMPLATE', 'get_default', 'get_children_errors',
+                'prepare_value', 'get_instance_html', 'definition',
+                'html_declarations', 'all_html_declarations')
     Block._meta_class.closed = False
     _patch_with(BaseStreamBlock, NewBaseStreamBlock,
                 'definition', 'sorted_child_blocks', 'render_list_member',

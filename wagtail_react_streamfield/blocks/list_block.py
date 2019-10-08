@@ -54,8 +54,7 @@ class NewListBlock(ListBlock):
             for child_block_data in data['value']]
 
     def prepare_value(self, value, errors=None):
-        children_errors = (None if errors is None
-                           else errors.as_data()[0].params)
+        children_errors = self.get_children_errors(errors)
         if children_errors is None:
             children_errors = [None] * len(value)
         prepared_value = []
@@ -67,7 +66,7 @@ class NewListBlock(ListBlock):
                 'type': self.child_block.name,
                 'hasError': bool(child_errors),
                 'value': self.child_block.prepare_value(child_value,
-                                                        errors=errors),
+                                                        errors=child_errors),
             })
             if html is not None:
                 child_value['html'] = html
