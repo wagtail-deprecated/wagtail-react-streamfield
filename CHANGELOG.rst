@@ -1,6 +1,11 @@
 What’s new in wagtail-react-streamfield?
 ========================================
 
+1.3.5
+-----
+
+Fixes validation errors in nested StructBlocks or ListBlocks
+
 1.3.4
 -----
 
