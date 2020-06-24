@@ -5,6 +5,8 @@ Wagtail React StreamField
    :target: https://pypi.python.org/pypi/wagtail-react-streamfield
 .. image:: https://img.shields.io/pypi/dm/wagtail-react-streamfield.svg
    :target: https://pypi.python.org/pypi/wagtail-react-streamfield
+.. image:: https://github.com/wagtail/wagtail-react-streamfield/workflows/CI/badge.svg
+   :target: https://github.com/wagtail/wagtail-react-streamfield/actions
 
 Drop-in replacement for the StreamField in `Wagtail <https://wagtail.io/>`_.
 
