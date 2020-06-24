@@ -1,6 +1,29 @@
+*.swp
 *.pyc
-/.idea/
+.DS_Store
+/.coverage
 /dist/
 /build/
-/wagtail_react_streamfield.egg-info/
+/MANIFEST
+/wagtail.egg-info/
+/docs/_build/
+/.tox/
+/venv
 /node_modules/
+npm-debug.log*
+*.idea/
+/*.egg/
+/.cache/
+/.pytest_cache/
+/wagtail_react_streamfield.egg-info/
+
+### JetBrains
+.idea/
+*.iml
+*.ipr
+*.iws
+coverage/
+client/node_modules
+
+### vscode
+.vscode
