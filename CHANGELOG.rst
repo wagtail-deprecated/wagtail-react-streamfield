@@ -1,6 +1,11 @@
 What’s new in wagtail-react-streamfield?
 ========================================
 
+Unreleased
+----------
+
+- Add vendor prefixes to the project’s stylesheet, to ensure styles are cross-browser-compatible (`user-select`, `appearance`, and `backface-visibility`).
+
 1.3.5
 -----
 
