@@ -1,7 +1,9 @@
 Wagtail React StreamField
 =========================
 
-.. image:: http://img.shields.io/pypi/v/wagtail-react-streamfield.svg?style=flat-square&maxAge=3600
+.. image:: http://img.shields.io/pypi/v/wagtail-react-streamfield.svg
+   :target: https://pypi.python.org/pypi/wagtail-react-streamfield
+.. image:: https://img.shields.io/pypi/dm/wagtail-react-streamfield.svg
    :target: https://pypi.python.org/pypi/wagtail-react-streamfield
 
 Drop-in replacement for the StreamField in `Wagtail <https://wagtail.io/>`_.
