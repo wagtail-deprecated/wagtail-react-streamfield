@@ -17,7 +17,7 @@ npm run build
 
 ## Releases
 
-- Update the [CHANGELOG](https://github.com/wagtail/wagtail-react-streamfield/CHANGELOG.rst).
+- Update the [CHANGELOG](https://github.com/wagtail/wagtail-react-streamfield/blob/master/CHANGELOG.md).
 - Update the version number in `wagtail-react-streamfield/__init__.py`.
 - Commit
 - `rm dist/* ; python setup.py sdist bdist_wheel; twine upload dist/*`
