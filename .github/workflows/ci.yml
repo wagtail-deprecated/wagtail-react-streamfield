@@ -7,6 +7,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 10.x
+          node-version: 14.x
       - run: npm ci --no-optional --no-audit --progress=false --no-fund
       - run: npm run build
