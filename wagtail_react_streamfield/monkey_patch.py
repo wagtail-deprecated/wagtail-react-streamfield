@@ -1,4 +1,5 @@
-from django.utils.six import wraps
+from functools import wraps
+
 from wagtail.core.blocks import (
     BlockField, Block, BaseStreamBlock, ListBlock, BaseStructBlock, FieldBlock,
     StaticBlock)
