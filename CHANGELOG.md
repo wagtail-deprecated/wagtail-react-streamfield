@@ -1,8 +1,11 @@
-# What’s new in wagtail-react-streamfield?
+# Changelog
 
 ## Unreleased
 
+## 1.3.6
+
 - Add vendor prefixes to the project’s stylesheet, to ensure styles are cross-browser-compatible (`user-select`, `appearance`, and `backface-visibility`).
+- Fix Django 3.0 compatibility issue due to removed `django.utils.six` ([#55](https://github.com/wagtail/wagtail-react-streamfield/issues/55), [#56](https://github.com/wagtail/wagtail-react-streamfield/pull/56)). Thanks to [@lennsa](https://github.com/lennsa), [@colinappnovation](https://github.com/colinappnovation), and [@zerolab](https://github.com/zerolab).
 
 ## 1.3.5
 
