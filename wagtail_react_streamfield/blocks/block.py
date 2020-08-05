@@ -65,8 +65,9 @@ class NewBlock(Block):
         if self.meta.icon != Block._meta_class.icon:
             definition['icon'] = ('<i class="icon icon-%s"></i>'
                                   % self.meta.icon)
-        if self.meta.classname is not None:
-            definition['className'] = self.meta.classname
+        classname = getattr(self.meta, 'form_classname', self.meta.classname)
+        if classname is not None:
+            definition['className'] = classname
         if self.meta.group:
             definition['group'] = str(self.meta.group)
         if self.meta.default:
