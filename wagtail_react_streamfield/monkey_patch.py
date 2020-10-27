@@ -1,5 +1,7 @@
 from functools import wraps
 
+from django.conf import settings
+
 from wagtail.core.blocks import (
     BlockField, Block, BaseStreamBlock, ListBlock, BaseStructBlock, FieldBlock,
     StaticBlock)
@@ -67,7 +69,7 @@ def patch():
                 'FIELD_NAME_TEMPLATE', 'get_default', 'get_children_errors',
                 'prepare_value', 'get_instance_html', 'definition',
                 'html_declarations', 'all_html_declarations')
-    Block._meta_class.closed = False
+    Block._meta_class.closed = getattr(settings, "BLOCK_CLOSED_BY_DEFAULT", False)
     _patch_with(BaseStreamBlock, NewBaseStreamBlock,
                 'definition', 'sorted_child_blocks', 'render_list_member',
                 'html_declarations', 'js_initializer', 'prepare_value',
