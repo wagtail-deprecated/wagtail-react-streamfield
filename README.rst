@@ -1,3 +1,5 @@
+**No longer maintained**: Features have been merged into Wagtail see [2.13 Release Notes](https://docs.wagtail.io/en/stable/releases/2.13.html#streamfield-performance-and-functionality-updates).
+
 Wagtail React StreamField
 =========================
 
