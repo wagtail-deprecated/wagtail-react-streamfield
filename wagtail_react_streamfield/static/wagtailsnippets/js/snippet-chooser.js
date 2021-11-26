@@ -4,6 +4,12 @@ function createSnippetChooser(id, modelString) {
     var input = $('#' + id);
     var editLink = chooserElement.find('.edit-link');
 
+    if (window.chooserUrls.snippetChooser) {
+      var chooserUrl = window.chooserUrls.snippetChooser;
+    } else {
+      var chooserUrl = chooserElement.data('chooserUrl');
+    }
+
     function snippetChosen(snippetData, initial) {
         if (!initial) {
             input.val(snippetData.id);
@@ -15,7 +21,7 @@ function createSnippetChooser(id, modelString) {
 
     $('.action-choose', chooserElement).on('click', function() {
         ModalWorkflow({
-            url: window.chooserUrls.snippetChooser + modelString + '/',
+            url: chooserUrl + modelString + '/',
             onload: SNIPPET_CHOOSER_MODAL_ONLOAD_HANDLERS,
             responses: {
                 snippetChosen: snippetChosen,
@@ -29,7 +35,7 @@ function createSnippetChooser(id, modelString) {
     });
 
     if (input.val()) {
-        $.ajax(window.chooserUrls.snippetChooser + modelString + '/'
+        $.ajax(chooserUrl + modelString + '/'
                + encodeURIComponent(input.val()) + '/')
             .done(function (data) {
                 snippetChosen(data.result, true);
