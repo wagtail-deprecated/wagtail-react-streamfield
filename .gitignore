@@ -28,5 +28,6 @@ client/node_modules
 ### vscode
 .vscode
 
-wagtail_react_streamfield/static/js
-wagtail_react_streamfield/static/css
+### Files built with webpack:
+### wagtail_react_streamfield/static/js
+### wagtail_react_streamfield/static/css
